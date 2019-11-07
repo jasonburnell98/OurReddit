@@ -47,7 +47,7 @@ var firebaseConfig = {
                 postids.map(postid=>{
                     $("#theposts").append(`
                     <li>
-                        <a class="showpost" data-postid=${postid}>${postsObj[postid].title}
+                        <a class="showpost" data-postid=${postsObj[postid].title}>${postsObj[postid].title}
                         </a>
                         </li> `);
                 });
@@ -57,13 +57,13 @@ var firebaseConfig = {
     $("#createExample").on("click",function(){
         let newExampleRef = firebase.database().ref("lobby").push();
         newExampleRef.set({title: $("#examplename").val()});
+        
     })
-
-
+    
 
     }
     let displayPost = function(postid){
-        alert("1");
+       
         $("#mainscreen").html(`
         <h1>Welcome to the ${postid}</h1>
         <button class = "backbutton">Back to Lobby</button>
