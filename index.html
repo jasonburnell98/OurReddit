@@ -141,7 +141,6 @@
           <label for="signup-password">Choose password</label>
          </div>
         <button class="btn yellow darken-2 z-depth-0">Sign up</button>
-        <button class="btn yellow darken-2 z-depth-0">Google</button>
        <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('modal-signup').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
@@ -182,20 +181,23 @@
     </div>
   </div>
   <!-- CREATE COMMENT MODAL -->
-  <div id="modal-create" class="modal">
+  <div id="modal-create" class="modal" align="center">
     <div class="modal-content">
-      <h4>Create Guide</h4><br />
+      <h4 text-align="center">Create post</h4>
       <form id="create-form">
         <div class="input-field">
           <input type="text" id="title" required>
-          <label for="title">Guide Title</label>
+          <label for="title">Title</label>
         </div>
         <div class="input-field">
-          <textarea id="content" class="materialize-textarea" required></textarea>
-          <label for="content">Guide Content</label>
+          <textarea id="content" class="materialize-textarea" required width="50" height = "15"></textarea>
+          <label for="content">Content</label>
         </div>
-        <button class="btn yellow darken-2 z-depth-0">Create</button>
+        <button id="createExample" class="btn yellow darken-2 z-depth-0">Create</button>
       </form>
+	     <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('modal-create').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
     </div>
   </div> 
 
@@ -206,9 +208,9 @@
 
 <script type="template/string" id="mytemplate">
 <h1>The Lobby</h1>
-<ul id="theposts">
-<input id = "examplename" placeholder="name new example"/>
-  <button id="createExample">Create Example</button>
+<ul id="thegames">
+<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'" >create</button>
+
 
   </ul>
 

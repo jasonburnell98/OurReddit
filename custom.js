@@ -56,7 +56,7 @@ var firebaseConfig = {
         });
     $("#createExample").on("click",function(){
         let newExampleRef = firebase.database().ref("lobby").push();
-        newExampleRef.set({title: $("#examplename").val()});
+        newExampleRef.set({title: $("#title").val(),description: $("#content").val()});
         
     })
     
