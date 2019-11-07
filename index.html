@@ -1,0 +1,301 @@
+<!--TODO
+
+1. Add username
+2. Let user search for another user
+3. When user clicks away from Signup box, close signupbox
+4. Close Window when User Signs up
+5. Only show Account tab when someone is logged in
+
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>OurReddit</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          <script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"</script>
+            <link rel = "stylesheet" href="custom.css">
+            <link rel = "stylesheet" href="toggle.css">
+
+        </head> 
+
+    <body>
+   
+    
+      </nav> 
+    <!--BOOTSTRAP NAVBAR-->
+    <nav class="navbar navbar-expand-lg navbar-light"  style="background-color: #e3f2fd;">
+      <a href="#"><img src="reddi.png" title="Example Image Link" width="30" height="20" /></a>
+        <!--<IMG SRC= "reddi.png" ALT= "some text" WIDTH = 30 HEIGHT = 20>&nbsp; -->
+      <a href="#" class= "navbar-brand">OurReddit</a>
+    
+        <!--COLLAPSIBLE BOOTSTRAP BUTTON-->
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+            <span class = "navbar-toggler-icon"></span>
+       </button> 
+        <div class= "collapse navbar-collapse" id = "navbarMenu" >
+        <ul class="navbar-nav">
+       
+                <!--DROPDOWN MENU-->
+             <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                 aria-haspopup="true" aria-expanded="false">Popular</a>
+                <div class="dropdown-menu" id = "mydropdown"aria-labelledby="navbarDropdown">
+                 <input type="text" placeholder="Filter" id="myInput" onkeyup="filterFunction()">
+                    <a class="dropdown-item" href="Media">Media</a>
+                    <a class="dropdown-item" href="Sports">Sports</a>
+                  <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="TopCommunites">Top Communities</a>
+              </div>
+            </li>
+      &nbsp; &nbsp; &nbsp; 
+
+    <!--USERNAME @-->
+        <form class="form-inline">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+         </form>
+        </ul> 
+
+        <!--SEARCH brand-->
+        <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+   
+        
+        </div>
+             
+     <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                 aria-haspopup="true" aria-expanded="false">Account</a>
+                <div class="dropdown-menu" id = "mydropdown"aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item">NightMode on/off
+                    <div class="toggle"></div></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="Sports">About</a>
+                  <div class="dropdown-divider"></div>
+                  &nbsp; &nbsp; &nbsp;
+                  <a href="#" class="grey-text" id="logout">Logout</a>
+              </div>
+            </li>
+            </ul>
+
+    
+                 <!--LOGIN BUTTONS-->
+        <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
+        &nbsp;
+        <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
+      &nbsp;
+
+
+      <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
+
+    </nav> 
+    
+  <!-- NAVBAR -->
+  <!--<nav class="z-depth-0 grey lighten-4">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo">
+        <img src="img/logo.svg" style="width: 180px; margin-top: 10px;">
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="logged-in">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
+          </li>
+          <li class="logged-in">
+            <a href="#" class="grey-text" id="logout">Logout</a>
+          </li>
+          <li class="logged-in">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Comment</a>
+          </li>
+        
+      </ul>
+    </div>
+  </nav> -->
+
+    
+  <!-- SIGN UP MODAL -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+    <span onclick="document.getElementById('modal-signup').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <h4>Sign up</h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Email address</label>
+            </div>
+            <div class="input-field">
+           <input type="password" id="signup-password" required />
+          <label for="signup-password">Choose password</label>
+         </div>
+        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+       <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('modal-signup').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+      </form>
+    </div>
+  </div>
+  <!-- LOGIN MODAL -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <span onclick="document.getElementById('modal-login').style.display='none'" class="close" title="Close Modal">&times;</span>
+       <h4>Login</h4><br />
+        <form id="login-form">
+         <div class="input-field">
+          <input type="email" id="login-email" required />
+           <label for="login-email">Email address</label>
+            </div>
+             <div class="input-field">
+            <input type="password" id="login-password" required />
+           <label for="login-password">Your password</label>
+          </div>
+         <button class="btn yellow darken-2 z-depth-0">Login</button>
+        <label>
+       <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+          <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('modal-login').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ACCOUNT MODAL -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Account details</h4><br />
+      <div class="account-details"></div>
+      <div class="account-extras"></div>
+    </div>
+  </div>
+  <!-- CREATE COMMENT MODAL -->
+  <div id="modal-create" class="modal">
+    <div class="modal-content">
+      <h4>Create Guide</h4><br />
+      <form id="create-form">
+        <div class="input-field">
+          <input type="text" id="title" required>
+          <label for="title">Guide Title</label>
+        </div>
+        <div class="input-field">
+          <textarea id="content" class="materialize-textarea" required></textarea>
+          <label for="content">Guide Content</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Create</button>
+      </form>
+    </div>
+  </div> 
+
+
+<div id = "mainscreen">
+...
+</div>
+
+<script type="template/string" id="mytemplate">
+<h1>The Lobby</h1>
+<ul id="thegames">
+<input id = "examplename" placeholder="name new example"/>
+  <button id="createExample">Create Example</button>
+
+  </ul>
+
+</script>
+
+  <!--Toggle Night Mode-->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.toggle').click(function(){
+            $('.toggle').toggleClass('active')
+            $('body').toggleClass('night')
+        })
+    })
+</script>
+
+
+<script>
+// Get the modal
+var modal = document.getElementById('modal-login');
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+} 
+
+
+
+//DROPDOWN MENU FUNCTION
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("mydropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+</script>
+    
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+         <script src="custom.js"></script>
+
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script>
+
+      <!--  <script>
+          // Your web app's Firebase configuration
+          var firebaseConfig = {
+            apiKey: "AIzaSyBUjU1OuJUnvueOI9FSvPGnnAg5w3uBQog",
+            authDomain: "ourreddit-1572579679058.firebaseapp.com",
+            databaseURL: "https://ourreddit-1572579679058.firebaseio.com",
+            projectId: "ourreddit-1572579679058",
+            storageBucket: "ourreddit-1572579679058.appspot.com",
+            messagingSenderId: "759250034016",
+            appId: "1:759250034016:web:612e3bb641ced9e02c1205",
+            measurementId: "G-64PCTQ8QLZ"
+          };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+
+            //make auth and firestone references
+            const auth = firebase.auth();
+            const db = firebase.firestore();
+        </script>
+        
+                compiled and minified Javascript-->
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                <script src="auth.js"></script>
+                <script src="index.js"></script>
+                
+             
+    </body>
+</html>
