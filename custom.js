@@ -34,25 +34,25 @@ var firebaseConfig = {
     //Two views: 1. list of examples
     //2. single page app
     let clickHandler = function(evt){
-        let gameid = $(evt.currentTarget).attr("data-gameid");
-        displayGame(gameid);   
+        let postid = $(evt.currentTarget).attr("data-postid");
+        displayPost(postid);   
     }
 
     let displayLobby = function(){
         $("#mainscreen").html($("#mytemplate").html());
         firebase.database().ref("lobby").on("value", ss=>{
-                let gamesObj = ss.val();
-                let gameids = Object.keys(gamesObj);
-                $("thegames").html('');
-                gameids.map(gameid=>{
-                    $("#thegames").append(`
+                let postsObj = ss.val();
+                let postids = Object.keys(postsObj);
+                $("theposts").html('');
+                postids.map(postid=>{
+                    $("#theposts").append(`
                     <li>
-                        <a class="showgame" data-gameid=${gameid}>${gamesObj[gameid].title}
+                        <a class="showpost" data-postid=${postid}>${postsObj[postid].title}
                         </a>
                         </li> `);
                 });
-                $(".showgame").off("click",clickHandler);
-                $(".showgame").on("click",clickHandler);
+                $(".showpost").off("click",clickHandler);
+                $(".showpost").on("click",clickHandler);
         });
     $("#createExample").on("click",function(){
         let newExampleRef = firebase.database().ref("lobby").push();
@@ -62,10 +62,10 @@ var firebaseConfig = {
 
 
     }
-    let displayGame = function(gameid){
+    let displayPost = function(postid){
         alert("1");
         $("#mainscreen").html(`
-        <h1>Welcome to the ${gameid}</h1>
+        <h1>Welcome to the ${postid}</h1>
         <button class = "backbutton">Back to Lobby</button>
         <ul id="users"> </ul>
         `);
