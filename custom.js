@@ -16,19 +16,19 @@ var firebaseConfig = {
   
             //make auth and firestone references
             const auth = firebase.auth();
-            // const db = firebase.firestore();
+             const db = firebase.firestore();
 
-
-  //This is a silly andy trick, ignore or not
-//   var myid = "";
-//   if(localStorage) {
-//     if(!localStorage.getItem("sillyID")) {
-//         myid = "id"+Math.floor(Math.random()*500000000);
-//         localStorage.setItem("sillyID", myid);
-//     } else {
-//       myid = localStorage.getItem("sillyID");
-//     }
-//   }
+             //this gets a specific post from the lobby and saves it as a document
+             const post = db.collection('lobby').doc('Fkas3Be5f1Eqp5VkjgxJ');
+            //THIS IS HOW YOU ACCESS EACH POST               
+             post.get().then(doc => {
+                 //console.log(doc.data());
+                 data = doc.data();
+                 console.log(data.title);
+                 console.log(data.description)
+             });
+             
+             
 
 
     //Two views: 1. list of examples
@@ -47,9 +47,12 @@ var firebaseConfig = {
                 postids.map(postid=>{
                     $("#theposts").append(`
                     <li>
+                    <div id="post">
                         <a class="showpost" data-postid=${postsObj[postid].title}>${postsObj[postid].title}
                         </a>
-                        </li> `);
+                        </li> 
+                    </div>`);
+                        
                 });
                 $(".showpost").off("click",clickHandler);
                 $(".showpost").on("click",clickHandler);
@@ -63,13 +66,16 @@ var firebaseConfig = {
 
     }
     let displayPost = function(postid){
-       
+        let x = firebase.database().ref(postid);
+        console.log(x);
         $("#mainscreen").html(`
-        <h1>Welcome to the ${postid}</h1>
-        <button class = "backbutton">Back to Lobby</button>
+        <div id="post_div">
+        <h1 align ="center">Welcome to the ${postid}</h1>
+        
         <ul id="users"> </ul>
+        </div>
         `);
-        $(".backbutton").on("click",displayLobby);
+
     }
     
     displayLobby();

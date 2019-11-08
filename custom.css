@@ -1,7 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 body { font-family: 'Montserrat',sans-serif }
 
-
+#post_div{
+  
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
+  height: 50%;
+  box-shadow: 0px 0px 25px #f7e7ce;
+  border-radius: 3px;
+}
 
 /* Extra styles for the cancel button */
 .cancelbtn {
