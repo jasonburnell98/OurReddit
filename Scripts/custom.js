@@ -1,27 +1,27 @@
 
  
   function add()
-  {
-  db.collection("cities").add({
-    name: "Tokydjaskfo",
-    country: "Janfkasfkaspan"
-})
-.then(function(docRef) {
-    console.log("Document written with ID: ", docRef.id);
-    document.location.reload(true);
-})
-.catch(function(error) {
-    console.error("Error adding document: ", error);
-});
+        {
+            db.collection("cities").add({
+                name: "Tokydjaskfo",
+                country: "Janfkasfkaspan"
+            })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                document.location.reload(true);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
 
-}
- 
+        }
+        
 
 
 
-            //make auth and firestone references
+            //make auth 
             const auth = firebase.auth();
-             //const db = firebase.firestore();
+      
 
              //this gets a specific post from the lobby and saves it as a document
             //  const post = db.collection('lobby').doc('jMqlqRvOUgQ7Bmv36sY0');

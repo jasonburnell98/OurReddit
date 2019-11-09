@@ -13,4 +13,5 @@ var firebaseConfig = {
  
   //firebase.database().ref("hi").set("there");
 
+  //make firestone references
   const db = firebase.firestore();
