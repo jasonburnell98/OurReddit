@@ -30,7 +30,7 @@
     
       </nav> 
     <!--BOOTSTRAP NAVBAR-->
-    <nav class="navbar navbar-expand-lg navbar-light"  style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
       <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="20" /></a>
         <!--<IMG SRC= "reddi.png" ALT= "some text" WIDTH = 30 HEIGHT = 20>&nbsp; -->
       <a href="index.html" class= "navbar-brand">OurReddit</a>
@@ -147,6 +147,8 @@
       </form>
     </div>
   </div>
+
+
   <!-- LOGIN MODAL -->
   <div id="modal-login" class="modal">
     <div class="modal-content">
@@ -158,9 +160,9 @@
            <label for="login-email">Email address</label>
             </div>
              <div class="input-field">
-            <input type="password" id="login-password" required />
-           <label for="login-password">Your password</label>
-          </div>
+              <input type="password" id="login-password" required />
+              <label for="login-password">Your password</label>
+            </div>
          <button class="btn yellow darken-2 z-depth-0">Login</button>
         <label>
        <input type="checkbox" checked="checked" name="remember"> Remember me
@@ -180,7 +182,9 @@
       <div class="account-extras"></div>
     </div>
   </div>
-  <!-- CREATE COMMENT MODAL -->
+
+
+  <!-- CREATE POST MODAL -->
   <div id="modal-create" class="modal" align="center">
     <div class="modal-content">
       <h4 text-align="center">Create post</h4>
@@ -193,7 +197,8 @@
           <textarea id="content" class="materialize-textarea" required width="50" height = "15"></textarea>
           <label for="content">Content</label>
         </div>
-        <button id="createExample" class="btn yellow darken-2 z-depth-0">Create</button>
+       <!-- <button id="createExample" class="btn yellow darken-2 z-depth-0">Create</button>-->
+       <button onclick="add()"  class="btn yellow darken-2 z-depth-0">create post</button>
       </form>
 	     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('modal-create').style.display='none'" class="cancelbtn">Cancel</button>
@@ -206,10 +211,15 @@
 ...
 </div>
 
+<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'" >create
+</button>
+
+
 <script type="template/string" id="mytemplate">
 <h1>The Lobby</h1>
+<button onclick="add()"  class="btn yellow darken-2 z-depth-0 align="center">create post</button>
+
 <ul id="theposts" align="center">
-<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'" >create</button>
 
 
   </ul>
