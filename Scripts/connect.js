@@ -11,4 +11,6 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
  
-  firebase.database().ref("hi").set("there");
+  //firebase.database().ref("hi").set("there");
+
+  const db = firebase.firestore();
