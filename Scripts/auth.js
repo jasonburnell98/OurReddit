@@ -26,7 +26,7 @@ signupForm.addEventListener('submit', (e) => {
     signupForm.reset();
     document.location.reload(true);
   });
-  document.location.reload(true);
+//  document.location.reload(true);
 });
 
 // logout
@@ -63,7 +63,6 @@ loginForm.addEventListener('submit', (e) => {
     //console.error("credentials not found: ", error);
     alert("please check your email and password");
 });
-  
-
+ 
 });
 
