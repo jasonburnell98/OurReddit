@@ -1,11 +1,12 @@
 
- 
   function add()
         {
-            db.collection("cities").add({
-                name: "Tokydjaskfo",
-                country: "Janfkasfkaspan"
-            })
+           db.collection("cities").add({
+               
+                country: $("#title").val(),
+                name: $("#content").val(),
+            }) 
+          
             .then(function(docRef) {
                 console.log("Document written with ID: ", docRef.id);
                 document.location.reload(true);
@@ -14,10 +15,11 @@
                 console.error("Error adding document: ", error);
             });
 
+
+          
+
         }
         
-
-
 
             //make auth 
             const auth = firebase.auth();
