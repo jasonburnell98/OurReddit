@@ -2,8 +2,10 @@
 auth.onAuthStateChanged(user => {
   if (user) {
     console.log('user logged in: ', user);
+    
   } else {
     console.log('user logged out');
+    
   }
 })
 
@@ -22,7 +24,9 @@ signupForm.addEventListener('submit', (e) => {
     const modal = document.querySelector('#modal-signup');
     M.Modal.getInstance(modal).close();
     signupForm.reset();
+    document.location.reload(true);
   });
+  document.location.reload(true);
 });
 
 // logout
@@ -47,7 +51,19 @@ loginForm.addEventListener('submit', (e) => {
     const modal = document.querySelector('#modal-login');
     M.Modal.getInstance(modal).close();
     loginForm.reset();
-  });
+    document.location.reload(true);
+    
+  })
+
+  .then(function(cred) {
+    alert("logged in  ");
+    document.location.reload(true);
+})
+.catch(function(error) {
+    //console.error("credentials not found: ", error);
+    alert("please check your email and password");
+});
+  
 
 });
 
