@@ -1,5 +1,6 @@
 var createComment=0;
 
+var postToComment;
 
   function add()
         {
@@ -44,6 +45,11 @@ var createComment=0;
         displaySinglePost(postid);   
     }
 
+    let commentclickHandler = function(evt){
+        let postid = $(evt.currentTarget).attr("data-commentid");
+        displaySinglecomment(postid);   
+    }
+
     //every time a change is made, a new post is added as an li
     function displayPosts()
     {
@@ -82,63 +88,8 @@ var createComment=0;
         .onSnapshot(function(doc) {
            // console.log("Current data: ", doc.data());
             displayPosts();
-    
-    
     });
-
-   
-        // firebase.database().ref("lobby").on("value", ss=>{
-        //         let postsObj = ss.val();
-        //         let postids = Object.keys(postsObj);
-        //         $("theposts").html('');
-        //         postids.map(postid=>{
-        //             $("#theposts").append(`
-        //             <li>
-        //             <div id="post_div">
-
-        //                 <a class="showpost" data-postid=${postsObj[postid].title}>  ${postsObj[postid].title}
-        //                 </a>
-        //                 </li> 
-
-        //             </div>      <br/>`);
-                        
-        //         });
-
-        //         $(".showpost").off("click",clickHandler);
-        //         $(".showpost").on("click",clickHandler);
-        // });
-    
-
-    }
-        
-        // citiesRef.doc("SF").set({
-        //     name: "San Francisco", state: "CA", country: "USA",
-        //     capital: false, population: 860000,
-        //     regions: ["west_coast", "norcal"] });
-    // $("#createExample").on("click",function(){
-
-    //     console.log("cklicked");
-    //    // var newExampleRef = db.collection("lobby");
-    //     // newExampleRef.doc("testttt").set({
-    //     //    title: $("#title").val(), description: $("#content").val()
-    //     // })
-    //     //let newExampleRef = firebase.database().ref("lobby").push();
-    //     //newExampleRef.set({title: $("#title").val(),description: $("#content").val()});
-    //      // add($("#title").val(), $("#content").val());
-    //      db.collection("cities").add({
-    //         //title:$("#title").val(),
-    //         //desc: $("#content").val()
-    //         title: "ok",
-    //         desc: "no"
-    //     })
-    //     .then(function(docRef) {
-    //         console.log("Document written with ID: ", docRef.id);
-    //     })
-    //     .catch(function(error) {
-    //         console.error("Error adding document: ", error);
-    //     });
-        
-    // });
+}
 
     let create_post = function()
     {
@@ -157,49 +108,97 @@ var createComment=0;
     
 
 
-displayLobby();
+        displayLobby();
 
-    function create_comment_True()
-    {
-        createComment++;
-        console.log(createComment);
-    }
 
-    function create_comment(postid)
+    //this functions creates comments
+    function create_comment()
     {
+        console.log(postToComment);
         console.log("creatting comment");
-        db.collection(postid).add({
+        db.collection(postToComment).add({
             
              comment:"comment was created"
          }) 
 
          .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
-            document.location.reload(true);
+            //document.location.reload(true);
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
 
+
+      //  sleep(2);
     }
+    
+
+    function getComments()
+    {
+        $("#commentDiv").html($("#comments").html());
+        db.collection(postToComment)
+        .onSnapshot(function(doc) {
+           // console.log("Current data: ", doc.data());
+          displayComments(postToComment);
+        })
+    }
+
+    function displayComments(collectionId)
+    {
+        db.collection(collectionId).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                var data = doc.data();
+                var id = doc.id;
+                console.log(data.comment);
+                console.log(id);                
+                $("#commentList").append(`
+                <li>
+                <div id="comment_div">
+
+                    <a class="showcomment" data-commentid=${id}>${data.title}</a>
+                    </li> 
+                    <br/>
+
+                </div><br/>`);
+                //console.log(doc.id, " => ", doc.data());
+            });
+
+            $(".showcomment").off("click",commentclickHandler);
+            $(".showcomment").on("click",commentclickHandler);
+        });
+        
+    }
+
+
+
     
 
     //display a single post
     let displaySinglePost = function(postid){
        // let x = firebase.database().ref(postid);
         console.log(postid);
+        postToComment = postid;
         $("#mainscreen").html(`
         <div id="post_div">
         <h1 align ="center">${postid}</h1> 
         <ul id="users"> </ul>
         </div>
-          <button id="comment" onclick="create_comment_True()"> create comment</button>
+          <button id="comment" onclick="create_comment()"> create comment</button>
         </div>      <br/>`);
-        if(createComment==1)
-        {
-            create_comment(postid);
-        }
-      
+
+        getComments();
+
+        //create_comment(postid);
+
+        db.collection(postid).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                var data = doc.data();
+                var id = doc.id;
+                console.log(id);            
+            })})
     }
     
    
+  

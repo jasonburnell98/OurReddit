@@ -189,11 +189,11 @@
       <h4 text-align="center">Create post</h4>
       <form id="create-form">
         <div class="input-field">
-          <input type= "text" id = "name" placeholder="enter name">
+          <input type= "text" id = "title" placeholder="enter name">
           <label for="title">Title</label>
         </div>
       <div class="input-field">
-        <input type= "text" id = "contents" placeholder="enter desc">
+        <input type= "text" id = "content" placeholder="enter desc">
       
           <label for="content">Content</label>
         </div>
@@ -211,6 +211,8 @@
 ...
 </div>
 
+<div id="commentDiv">...</div>
+
 
 <input type= "text" id = "name" placeholder="enter name">
 <input type= "text" id = "contents" placeholder="enter desc">
@@ -225,6 +227,11 @@
 
 </script>
 
+
+<script type "template/string" id ="comments">
+  <ul id="commentList" align="center"></ul>
+
+</script>
   <!--Toggle Night Mode-->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript">
