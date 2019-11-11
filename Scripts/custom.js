@@ -7,13 +7,15 @@ var postToComment;
         {
             var title = $("#name").val();
             var content = $("#contents").val();
-
+            var today = new Date();
+            var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
            db.collection("posts").add({
                
                 title: title,
-                name: content
-                date: 
+                name: content,
+                date: currdate
+                
             }) 
           
             .then(function(doc) {
@@ -66,7 +68,7 @@ var postToComment;
                 $("#theposts").append(`
                 <li>
                 <div id="post_div">
-
+                    <p>created:   ${data.date}</p>
                     <a class="showpost" data-postid=${id}>${data.title}</a>
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
@@ -203,8 +205,10 @@ var postToComment;
             postToComment = postid;
             $("#mainscreen").html(`
             <div id="post_div">
+            <p>created on:   ${data.date}</p>
             <h1 align ="center">${data.title}</h1> <br/>
             <h2 align ="center">${data.name}</h2> 
+
             
             <ul id="users"> </ul>
             </div>
