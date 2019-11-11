@@ -86,60 +86,8 @@ var createComment=0;
     
     });
 
-   
-        // firebase.database().ref("lobby").on("value", ss=>{
-        //         let postsObj = ss.val();
-        //         let postids = Object.keys(postsObj);
-        //         $("theposts").html('');
-        //         postids.map(postid=>{
-        //             $("#theposts").append(`
-        //             <li>
-        //             <div id="post_div">
-
-        //                 <a class="showpost" data-postid=${postsObj[postid].title}>  ${postsObj[postid].title}
-        //                 </a>
-        //                 </li> 
-
-        //             </div>      <br/>`);
-                        
-        //         });
-
-        //         $(".showpost").off("click",clickHandler);
-        //         $(".showpost").on("click",clickHandler);
-        // });
-    
-
     }
         
-        // citiesRef.doc("SF").set({
-        //     name: "San Francisco", state: "CA", country: "USA",
-        //     capital: false, population: 860000,
-        //     regions: ["west_coast", "norcal"] });
-    // $("#createExample").on("click",function(){
-
-    //     console.log("cklicked");
-    //    // var newExampleRef = db.collection("lobby");
-    //     // newExampleRef.doc("testttt").set({
-    //     //    title: $("#title").val(), description: $("#content").val()
-    //     // })
-    //     //let newExampleRef = firebase.database().ref("lobby").push();
-    //     //newExampleRef.set({title: $("#title").val(),description: $("#content").val()});
-    //      // add($("#title").val(), $("#content").val());
-    //      db.collection("cities").add({
-    //         //title:$("#title").val(),
-    //         //desc: $("#content").val()
-    //         title: "ok",
-    //         desc: "no"
-    //     })
-    //     .then(function(docRef) {
-    //         console.log("Document written with ID: ", docRef.id);
-    //     })
-    //     .catch(function(error) {
-    //         console.error("Error adding document: ", error);
-    //     });
-        
-    // });
-
     let create_post = function()
     {
         db.collection("cities").add({

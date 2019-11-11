@@ -95,8 +95,10 @@
                  <!--LOGIN BUTTONS-->
         <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
            &nbsp;
+           
         <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
            &nbsp;
+<button onclick="onSignIn(googleUser)">google</button>
 
 
       <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
@@ -187,19 +189,14 @@
   <div id="modal-create" class="modal" align="center">
     <div class="modal-content">
       <h4 text-align="center">Create post</h4>
-      <form id="create-form">
         <div class="input-field">
+         <label for="name">Post</label>
           <input type= "text" id = "name" placeholder="enter name">
-          <label for="title">Title</label>
-        </div>
-      <div class="input-field">
-        <input type= "text" id = "contents" placeholder="enter desc">
-      
-          <label for="content">Content</label>
-        </div>
-      
-       <button onclick="add()"  class="btn yellow darken-2 z-depth-0">create post</button>
-      </form>
+         <br><label for="contents">Your content</label>
+          <input type= "text" id = "contents" placeholder="enter desc">
+          <button class="btn btn-outline-success my-2 my-sm-0" onclick="add()">add post</button>
+         
+          </div>
 	     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('modal-create').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
@@ -211,10 +208,6 @@
 ...
 </div>
 
-
-<input type= "text" id = "name" placeholder="enter name">
-<input type= "text" id = "contents" placeholder="enter desc">
-<button onclick="add()">add post</button>
 
 <script type="template/string" id="mytemplate">
 
