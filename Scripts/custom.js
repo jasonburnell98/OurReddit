@@ -13,6 +13,7 @@ var postToComment;
                
                 title: title,
                 name: content
+                date: 
             }) 
           
             .then(function(doc) {
@@ -129,7 +130,7 @@ var postToComment;
 
          .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
-            document.location.reload(true);
+            //document.location.reload(true);
 
             displaySinglePost(postToComment);
 
@@ -184,15 +185,28 @@ var postToComment;
     function displaySinglePost(postid){
        // let x = firebase.database().ref(postid);
         console.log(postid);
-        postToComment = postid;
-        $("#mainscreen").html(`
-        <div id="post_div">
-        <h1 align ="center">${postid}</h1> 
-        <ul id="users"> </ul>
-        </div>
-          <button id="comment" onclick="create_comment()"> create comment</button>
-        </div>      <br/>`);
+        const post = db.collection('posts').doc(postid);
+        var name;   
+             //THIS IS HOW YOU ACCESS EACH POST               
+      
+    
+             
 
+        post.get().then(doc => {
+
+            data = doc.data();
+
+            postToComment = postid;
+            $("#mainscreen").html(`
+            <div id="post_div">
+            <h1 align ="center">${data.title}</h1> <br/>
+            <h2 align ="center">${data.name}</h2> 
+            
+            <ul id="users"> </ul>
+            </div>
+            <button id="comment" onclick="create_comment()"> create comment</button>
+            </div>      <br/>`);
+        });
         getComments();
 
         //create_comment(postid);
