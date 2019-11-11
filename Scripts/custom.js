@@ -8,7 +8,7 @@
             }) 
           
             .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
+                console.log("Document written with ID: ", doc.data);
                 document.location.reload(true);
             })
             .catch(function(error) {
@@ -66,15 +66,16 @@
             querySnapshot.forEach(function(doc) {
                 // doc.data() is never undefined for query doc snapshots
                 var data = doc.data();
-                var id = doc.id
+                var id = doc.id;
                 console.log(data.country);
                 console.log(id);                
                 $("#theposts").append(`
                 <li>
                 <div id="post_div">
 
-                    <a class="showpost" data-postid=${id}>  ${data.country}
-                    </a>
+                    <a class="showpost" data-postid=${id}>${data.country}</a>
+                    <br>
+                    <a class="showpost" data-postid=${id}>${data.name}</a>
                     </li> 
 
                 </div>      <br/>`);

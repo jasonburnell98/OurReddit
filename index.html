@@ -3,10 +3,11 @@
 1. Only show Account tab when someone is logged in
 2. Fix content/commentssss
 3. add more stuff to account tab based on whether logged in or logged out
+4. Oauth (wth google)
 
 -->
 
-
+ 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,9 +94,9 @@
     
                  <!--LOGIN BUTTONS-->
         <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
-        &nbsp;
+           &nbsp;
         <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
-      &nbsp;
+           &nbsp;
 
 
       <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
@@ -215,7 +216,7 @@
 <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'">create
 </button>
 
-<ul id="theposts" align="center"></ul>
+<ul id="theposts" align="center"text-align="center"></ul>
 
 </script>
 
@@ -248,7 +249,7 @@ function filterFunction() {
   var input, filter, ul, li, a, i;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
-  div = document.getElementById("title");
+  div = document.getElementById("mydropdown");
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -263,7 +264,7 @@ function searchFunction() {
   var input, search, ul, li, a, i;
   input = document.getElementById("myInput");
   search = input.value.toUpperCase();
-  div = document.getElementById("mydropdown");
+  div = document.getElementById("title");
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
