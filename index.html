@@ -1,14 +1,13 @@
 <!--TODO
 
-1. Add username
-2. Let user search for another user
-3. When user clicks away from Signup box, close signupbox
-4. Close Window when User Signs up
-5. Only show Account tab when someone is logged in
+1. Only show Account tab when someone is logged in
+2. Fix content/commentssss
+3. add more stuff to account tab based on whether logged in or logged out
+4. Oauth (wth google)
 
 -->
 
-
+ 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +68,8 @@
 
         <!--SEARCH brand-->
         <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+         
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"onkeyup="searchFunction()">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
    
@@ -94,9 +94,9 @@
     
                  <!--LOGIN BUTTONS-->
         <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
-        &nbsp;
+           &nbsp;
         <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
-      &nbsp;
+           &nbsp;
 
 
       <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
@@ -192,10 +192,10 @@
           <input type="text" id="title" required>
           <label for="title">Title</label>
         </div>
-        <div class="input-field">
-          <textarea id="content" class="materialize-textarea" required width="50" height = "15"></textarea>
+      <div class="input-field">
+          <input type="text" id="content" required>
           <label for="content">Content</label>
-        </div> 
+        </div>
       
        <button onclick="add()"  class="btn yellow darken-2 z-depth-0">create post</button>
       </form>
@@ -210,17 +210,13 @@
 ...
 </div>
 
-<button onclick="add()">add somethign</button>
 
 <script type="template/string" id="mytemplate">
-<h1>The Lobby</h1>
-<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'" >create
+
+<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'">create
 </button>
 
-<ul id="theposts" align="center">
-
-
-  </ul>
+<ul id="theposts" align="center"text-align="center"></ul>
 
 </script>
 
@@ -258,6 +254,21 @@ function filterFunction() {
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+function searchFunction() {
+  var input, search, ul, li, a, i;
+  input = document.getElementById("myInput");
+  search = input.value.toUpperCase();
+  div = document.getElementById("title");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(search) > -1) {
       a[i].style.display = "";
     } else {
       a[i].style.display = "none";
