@@ -1,10 +1,17 @@
+var createComment=0;
+
 
   function add()
         {
+            var title = $("#title").val();
+            var content = $("#content").val();
+
+            title = document.getElementById("title");
+            content = document.getElementById("content");
            db.collection("cities").add({
                
-                country: $("#title").val(),
-                name: $("#content").val(),
+                title: title,
+                name: content
             }) 
           
             .then(function(docRef) {
@@ -14,10 +21,6 @@
             .catch(function(error) {
                 console.error("Error adding document: ", error);
             });
-
-
-          
-
         }
         
 
@@ -26,40 +29,23 @@
       
 
              //this gets a specific post from the lobby and saves it as a document
-            //  const post = db.collection('lobby').doc('jMqlqRvOUgQ7Bmv36sY0');
-            // //THIS IS HOW YOU ACCESS EACH POST               
-            //  post.get().then(doc => {
-            //      //console.log(doc.data());
-            //      data = doc.data();
-            //      console.log(data.title);
-            //      console.log(data.description)
-            //  });
-
+             const post = db.collection('cities').doc('Fg5NExhSvqlabDJb4dGE');
             
-              
-            db.collection("lobby")
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data());
-                    var data = doc.data();
-                    console.log(data.title);
-                });
-            })
-            .catch(function(error) {
-                console.log("Error getting documents: ", error);
-            });
+             //THIS IS HOW YOU ACCESS EACH POST               
+             post.get().then(doc => {
+                 //console.log(doc.data());
+                 data = doc.data();
+                 console.log(data.title);
+                 console.log(data.name)
+             });
 
 
-
-    //Two views: 1. list of examples
-    //2. single page app
     let clickHandler = function(evt){
         let postid = $(evt.currentTarget).attr("data-postid");
-        displayPost(postid);   
+        displaySinglePost(postid);   
     }
 
+    //every time a change is made, a new post is added as an li
     function displayPosts()
     {
         db.collection("cities").get().then(function(querySnapshot) {
@@ -67,13 +53,13 @@
                 // doc.data() is never undefined for query doc snapshots
                 var data = doc.data();
                 var id = doc.id
-                console.log(data.country);
+                console.log(data.title);
                 console.log(id);                
                 $("#theposts").append(`
                 <li>
                 <div id="post_div">
 
-                    <a class="showpost" data-postid=${id}>  ${data.country}
+                    <a class="showpost" data-postid=${id}>  ${data.title}
                     </a>
                     </li> 
 
@@ -89,6 +75,7 @@
         
     }
 
+    //displays all the posts
     let displayLobby = function(){
         $("#mainscreen").html($("#mytemplate").html());
         db.collection("cities")
@@ -172,18 +159,47 @@
 
 displayLobby();
 
+    function create_comment_True()
+    {
+        createComment++;
+        console.log(createComment);
+    }
 
+    function create_comment(postid)
+    {
+        console.log("creatting comment");
+        db.collection(postid).add({
+            
+             comment:"comment was created"
+         }) 
+
+         .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            document.location.reload(true);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+
+    }
     
-    let displayPost = function(postid){
-        let x = firebase.database().ref(postid);
-        console.log(x);
+
+    //display a single post
+    let displaySinglePost = function(postid){
+       // let x = firebase.database().ref(postid);
+        console.log(postid);
         $("#mainscreen").html(`
         <div id="post_div">
         <h1 align ="center">${postid}</h1> 
         <ul id="users"> </ul>
         </div>
-        `);
-
+          <button id="comment" onclick="create_comment_True()"> create comment</button>
+        </div>      <br/>`);
+        if(createComment==1)
+        {
+            create_comment(postid);
+        }
+      
     }
     
    
