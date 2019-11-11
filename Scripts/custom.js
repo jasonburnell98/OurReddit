@@ -28,15 +28,15 @@ var createComment=0;
       
 
              //this gets a specific post from the lobby and saves it as a document
-             const post = db.collection('cities').doc('Fg5NExhSvqlabDJb4dGE');
+            //  const post = db.collection('cities').doc('Fg5NExhSvqlabDJb4dGE');
             
-             //THIS IS HOW YOU ACCESS EACH POST               
-             post.get().then(doc => {
-                 //console.log(doc.data());
-                 data = doc.data();
-                 console.log(data.title);
-                 console.log(data.name)
-             });
+            //  //THIS IS HOW YOU ACCESS EACH POST               
+            //  post.get().then(doc => {
+            //      //console.log(doc.data());
+            //      data = doc.data();
+            //      console.log(data.title);
+            //      console.log(data.name)
+            //  });
 
 
     let clickHandler = function(evt){
@@ -58,7 +58,7 @@ var createComment=0;
                 <li>
                 <div id="post_div">
 
-                    <a class="showpost" data-postid=${id}>${data.country}</a>
+                    <a class="showpost" data-postid=${id}>${data.title}</a>
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
                     </li> 
