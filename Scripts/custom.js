@@ -3,18 +3,17 @@ var createComment=0;
 
   function add()
         {
-            var title = $("#title").val();
-            var content = $("#content").val();
+            var title = $("#name").val();
+            var content = $("#contents").val();
 
-            title = document.getElementById("title");
-            content = document.getElementById("content");
+
            db.collection("cities").add({
                
                 title: title,
                 name: content
             }) 
           
-            .then(function(docRef) {
+            .then(function(doc) {
                 console.log("Document written with ID: ", doc.data);
                 document.location.reload(true);
             })
