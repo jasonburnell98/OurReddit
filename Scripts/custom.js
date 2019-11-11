@@ -13,7 +13,7 @@ var postToComment;
                
                 title: title,
                 name: content
-                date: 
+                
             }) 
           
             .then(function(doc) {
