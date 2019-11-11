@@ -125,9 +125,13 @@ var postToComment;
         var x= $("#commentInput").val();
         console.log(postToComment);
         console.log("creatting comment");
+        var today = new Date();
+        var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
         db.collection(postToComment).add({
             
-             comment:x
+             comment:x,
+             date: currdate
          }) 
 
          .then(function(docRef) {
@@ -168,7 +172,7 @@ var postToComment;
                 $("#commentList").append(`
                 <li>
                 <div id="comment_div">
-
+                    <p>date created: ${data.date}</p>
                     <a class="showcomment" data-commentid=${id}>${data.comment}</a>
                     </li> 
                     <br/>
@@ -195,9 +199,6 @@ var postToComment;
         var name;   
              //THIS IS HOW YOU ACCESS EACH POST               
       
-    
-             
-
         post.get().then(doc => {
 
             data = doc.data();
