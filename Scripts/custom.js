@@ -55,6 +55,7 @@ var postToComment;
     function displayPosts()
     {
         db.collection("posts").get().then(function(querySnapshot) {
+            $("#theposts").html('');
             querySnapshot.forEach(function(doc) {
                 // doc.data() is never undefined for query doc snapshots
                 var data = doc.data();
@@ -178,10 +179,6 @@ var postToComment;
         });
         
     }
-
-
-
-    
 
     //display a single post
     function displaySinglePost(postid){
