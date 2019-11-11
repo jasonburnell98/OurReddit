@@ -189,11 +189,11 @@
       <h4 text-align="center">Create post</h4>
       <form id="create-form">
         <div class="input-field">
-          <input type= "text" id = "title" placeholder="enter name">
+          <input type= "text" id = "title" placeholder="enter name"></input>
           <label for="title">Title</label>
         </div>
       <div class="input-field">
-        <input type= "text" id = "content" placeholder="enter desc">
+        <input type= "text" id = "content" placeholder="enter desc"></input>
       
           <label for="content">Content</label>
         </div>
@@ -207,31 +207,32 @@
   </div> 
 
 
-<div id = "mainscreen">
-...
-</div>
+<div id = "mainscreen">...</div>
 
 <div id="commentDiv">...</div>
 
 
-<input type= "text" id = "name" placeholder="enter name">
-<input type= "text" id = "contents" placeholder="enter desc">
-<button onclick="add()">add post</button>
 
 <script type="template/string" id="mytemplate">
 
 <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'">create
 </button>
-
+<input type= "text" id = "name" placeholder="enter name"></input>
+<input type= "text" id = "contents" placeholder="enter desc"></input>
+<button onclick="add()">add post</button>
 <ul id="theposts" align="center"text-align="center"></ul>
 
 </script>
 
 
 <script type "template/string" id ="comments">
+ 
+  <input type="text" id = "commentInput" placeholder="enter comment"></input>
   <ul id="commentList" align="center"></ul>
 
 </script>
+
+
   <!--Toggle Night Mode-->
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript">
