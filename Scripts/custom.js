@@ -187,10 +187,6 @@ var postToComment;
         
     }
 
-
-
-    
-
     //display a single post
     function displaySinglePost(postid){
        // let x = firebase.database().ref(postid);
