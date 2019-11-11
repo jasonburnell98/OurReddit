@@ -90,7 +90,10 @@ var postToComment;
            // console.log("Current data: ", doc.data());
             displayPosts();
     });
-}
+
+    }
+        
+
 
     let create_post = function()
     {

@@ -95,8 +95,10 @@
                  <!--LOGIN BUTTONS-->
         <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
            &nbsp;
+           
         <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
            &nbsp;
+<button onclick="onSignIn(googleUser)">google</button>
 
 
       <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
@@ -187,8 +189,14 @@
   <div id="modal-create" class="modal" align="center">
     <div class="modal-content">
       <h4 text-align="center">Create post</h4>
-      <form id="create-form">
         <div class="input-field">
+         <label for="name">Post</label>
+          <input type= "text" id = "name" placeholder="enter name">
+         <br><label for="contents">Your content</label>
+          <input type= "text" id = "contents" placeholder="enter desc">
+          <button class="btn btn-outline-success my-2 my-sm-0" onclick="add()">add post</button>
+         
+          </div>
           <input type= "text" id = "title" placeholder="enter name"></input>
           <label for="title">Title</label>
         </div>
