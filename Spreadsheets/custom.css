@@ -106,6 +106,16 @@ body { font-family: 'Montserrat',sans-serif }
        width: 100%;
     }
   }
-  * {box-sizing: border-box;}
-
+  .theposts {
+    text-align: center;
+    list-style: inside;
+   
+    
+  }
+  div.mainscreen{
+  width: 500px;
+  margin: auto;
+  border: 3px solid #73AD21;
+    color:red;
   
+}

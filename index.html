@@ -15,20 +15,38 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-             <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+            <meta name="google-signin-ourreddit-1572579679058" content="ourreddit-1572579679058.apps.googleusercontent.com">
             <title>OurReddit</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-          <script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"</script>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+            <script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"</script>
             <link rel = "stylesheet" href="Spreadsheets/custom.css">
             <link rel = "stylesheet" href="Spreadsheets/toggle.css">
+              <link rel = "stylesheet" href="Spreadsheets/background.css">
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            
 
         </head> 
 
     <body>
-   
-    
-      
+    <!--
+               <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
+            <div class="btn white darken-4 col s10 m4">
+              <a href="/users/google-oauth/" style="text-transform:none">
+                  <div class="left">
+              <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
+            </div>Login with Google</a>
+
+<button onclick = "googleSignin()">Google Signin</button>
+  <div class="btn white darken-4 col s10 m4">
+     <a href="/users/google-oauth/" style="text-transform:none">
+         <div class="left">
+             <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
+         </div>Login with Google</a>
+</div> -->
+
     <!--BOOTSTRAP NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
       <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="20" /></a>
@@ -56,7 +74,7 @@
             </li>
       &nbsp; &nbsp; &nbsp; 
 
-    <!--USERNAME @-->
+    <!--USERNAME @
         <form class="form-inline">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -65,14 +83,13 @@
                 <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
             </div>
          </form>
-        </ul> 
+        </ul> -->
 
         <!--SEARCH brand-->
-        <form class="form-inline my-2 my-lg-0">
-         
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"onkeyup="searchFunction()">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+   <form id = "mainform" action="">
+  <input id = "mainsearch" type="search">
+  <i class="fa fa-search"></i>
+</form>
    
         
         </div>
@@ -99,7 +116,7 @@
            
         <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
            &nbsp;
-<button id="result"onClick="function(this.result);">google</button>
+
 
 
       <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
@@ -142,7 +159,8 @@
            <input type="password" id="signup-password" required />
           <label for="signup-password">Choose password</label>
          </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+        <button class="btn yellow darken-2 z-depth-0">Sign up</button> 
+       <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
        <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('modal-signup').style.display='none'" class="cancelbtn">Cancel</button>
     </div>
@@ -209,7 +227,7 @@
   
 <div id = "mainscreen">...</div>
 
-<div id="commentDiv">...</div>
+<div id="commentDiv"></div>
 
 
 
@@ -220,7 +238,7 @@
 <input type= "text" id = "name" placeholder="enter name"></input>
 <input type= "text" id = "contents" placeholder="enter desc"></input>
 <button onclick="add()">add post</button>
-<ul id="theposts" align="center"text-align="center"></ul>
+<div id="theposts" align="center"text-align="center"></div>
 
 </script>
 
