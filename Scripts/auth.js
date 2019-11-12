@@ -3,7 +3,7 @@
   //call back function, takes in user as a parameter
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log('user logged in: ', user);
+    console.log('user logged in: ', user.email);
     
   } else {
     console.log('user logged out');
@@ -19,6 +19,7 @@ signupForm.addEventListener('submit', (e) => {
   // get user info
   const email = signupForm['signup-email'].value;
   const password = signupForm['signup-password'].value;
+  const username= signupForm['signup-username'].value;
 
   // sign up the user
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
