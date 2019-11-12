@@ -15,10 +15,12 @@ var post_flag=0;
             var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
             currdate= currdate +", "+time;
            db.collection("posts").add({
-               
+                
                 title: title,
                 name: content,
-                date: currdate
+                date: currdate,
+                upvotes:0,
+                dowvotes:0
                 
             }) 
           
@@ -33,8 +35,7 @@ var post_flag=0;
         
 
             //make auth 
-            const auth = firebase.auth();
-      
+            const auth = firebase.auth();   
 
              //this gets a specific post from the lobby and saves it as a document
             //  const post = db.collection('posts').doc('Fg5NExhSvqlabDJb4dGE');
@@ -65,6 +66,32 @@ var post_flag=0;
         create_comment(postid);   
     }
 
+    let deleteHandler = function(evt)
+    {
+        let postid= $(evt.currentTarget).attr("data-postid");
+        deletePost(postid);
+    }
+
+    function deletePost(postid)
+    {
+        db.collection("posts").doc(postid).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+
+        db.collection(postid).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+            
+        db.collection(postid).doc(doc.id).delete().then(function() {
+            console.log("comment successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+            })
+        })
+    }
+
     //every time a change is made, a new post is added as an li
     //this function displays all the posts
     function displayPosts()
@@ -74,13 +101,14 @@ var post_flag=0;
             querySnapshot.forEach(function(doc) {
                 var data = doc.data();
                 var id = doc.id;
-                console.log(data.country);
                 console.log(id);                
                 $("#theposts").append(`
                 <li>
-                <div id="post_div">
-                    <p>created:   ${data.date}</p>
-                    <a class="showpost" data-postid=${id}>${data.title}</a>
+                <div id="post_div" data-postid=${id} class="showpost">
+                    <div id="titlediv">
+                        <h6>created:   ${data.date}</h6>
+                        <button class ="delete" data-postid=${id}>delete </button>
+                        <h3 >${data.title}</h3></div>
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
                     </li> 
@@ -90,6 +118,10 @@ var post_flag=0;
 
             $(".showpost").off("click",clickHandler);
             $(".showpost").on("click",clickHandler);
+
+            $(".delete").off("click",deleteHandler);
+            $(".delete").on("click",deleteHandler);
+
         });
         
     }
@@ -164,7 +196,7 @@ var post_flag=0;
                 console.log(data.comment);
                 console.log(id);                
                 $("#commentList").append(`
-                <li>
+                <li id=${id}>
                 <div id="comment_div">
                     <p>date created: ${data.date}</p>
                     <a class="showcomment" data-commentid=${id}>${data.comment}</a>
