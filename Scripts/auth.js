@@ -3,6 +3,8 @@
 auth.onAuthStateChanged(user => {
   if (user) {
     console.log('user logged in: ', user.email);
+    console.log('user logged in: ', user.username);
+    
     
   } else {
     console.log('user logged out');
@@ -19,6 +21,10 @@ signupForm.addEventListener('submit', (e) => {
   const email = signupForm['signup-email'].value;
   const password = signupForm['signup-password'].value;
   const username= signupForm['signup-username'].value;
+  console.log(password);
+  console.log(username);
+  console.log(email);  
+
 
   // sign up the user
   auth.createUserWithEmailAndPassword(email, password).then(cred => {

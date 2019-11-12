@@ -2,13 +2,20 @@
 body { font-family: 'Montserrat',sans-serif }
 
 #post_div{
-  
+  margin: auto;
 
- 
   width: 60%;
   height: 200px;
-  box-shadow: 0px 0px 25px #413f3d23;
+  box-shadow: 0px 0px 25px #27262575;
   border-radius: 3px;
+}
+.showpost:hover{
+ opacity: .8
+}
+#titlediv
+{
+  display: block;
+  text-align: left;
 }
 
 /* Extra styles for the cancel button */
