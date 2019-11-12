@@ -33,19 +33,19 @@
     <body>
     <!--
                <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
-            <div class="btn white darken-4 col s10 m4">
-              <a href="/users/google-oauth/" style="text-transform:none">
+                  <div class="btn white darken-4 col s10 m4">
+                   <a href="/users/google-oauth/" style="text-transform:none">
                   <div class="left">
-              <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
-            </div>Login with Google</a>
+                    <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
+                </div>Login with Google</a>
 
-<button onclick = "googleSignin()">Google Signin</button>
-  <div class="btn white darken-4 col s10 m4">
-     <a href="/users/google-oauth/" style="text-transform:none">
-         <div class="left">
-             <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
-         </div>Login with Google</a>
-</div> -->
+                  <button onclick = "googleSignin()">Google Signin</button>
+                    <div class="btn white darken-4 col s10 m4">
+                      <a href="/users/google-oauth/" style="text-transform:none">
+                          <div class="left">
+                              <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
+                          </div>Login with Google</a>
+                  </div> -->
 
     <!--BOOTSTRAP NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
@@ -116,8 +116,6 @@
            
         <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
            &nbsp;
-
-
 
       <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
 
@@ -301,13 +299,13 @@ function searchFunction() {
   input = document.getElementById("myInput");
   search = input.value.toUpperCase();
   div = document.getElementById("title");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
+  content = getElementsByTagName("content");
+  for (i = 0; i < content.length; i++) {
+    txtValue = content[i].textContent || content[i].innerText;
     if (txtValue.toUpperCase().indexOf(search) > -1) {
-      a[i].style.display = "";
+      content[i].style.display = "";
     } else {
-      a[i].style.display = "none";
+      content[i].style.display = "none";
     }
   }
 }
