@@ -300,6 +300,7 @@ var post_flag=0;
             })
 
              
+            
             $("#mainscreen").html(`
             <div id="post_div">
             <p>created on:   ${data.date}</p>
