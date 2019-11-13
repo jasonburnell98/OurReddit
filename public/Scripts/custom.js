@@ -9,6 +9,13 @@ var post_flag=0;
             var title = $("#name").val();
             var content = $("#contents").val();
             var today = new Date();
+
+            if (title==''||content=='')
+            {
+                alert('enter content');
+            }
+
+            else{
             
             var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             var today = new Date();
@@ -20,7 +27,9 @@ var post_flag=0;
                 name: content,
                 date: currdate,
                 upvotes:0,
-                dowvotes:0
+                downvotes:0,
+                views:0
+                
                 
             }) 
           
@@ -32,11 +41,15 @@ var post_flag=0;
                 console.error("Error adding document: ", error);
             });
         }
+    }
         
 
             //make auth 
             const auth = firebase.auth();   
 
+           
+
+        
              //this gets a specific post from the lobby and saves it as a document
             //  const post = db.collection('posts').doc('Fg5NExhSvqlabDJb4dGE');
             
@@ -72,6 +85,53 @@ var post_flag=0;
         deletePost(postid);
     }
 
+    let upvoteHandler = function(evt)
+    {
+        let postid= $(evt.currentTarget).attr("data-postid");
+        upvote(postid);
+    }
+
+    let downvoteHandler = function(evt)
+    {
+        let postid= $(evt.currentTarget).attr("data-postid");
+        downvote(postid);
+    }
+
+    function upvote(id)
+    {
+        const post = db.collection('posts').doc(id);
+        var temp;   
+             //THIS IS HOW YOU ACCESS EACH POST               
+        post.get().then(doc => {
+            
+            var data = doc.data();
+            temp= data.upvotes;
+            temp++;
+        
+            db.collection('posts').doc(id).update({
+                upvotes:temp
+            })
+    
+})
+}
+
+    function downvote(id)
+    {
+        const post = db.collection('posts').doc(id);
+        var temp;   
+             //THIS IS HOW YOU ACCESS EACH POST               
+        post.get().then(doc => {
+            
+            var data = doc.data();
+            temp= data.downvotes;
+            temp++;
+        
+            db.collection('posts').doc(id).update({
+                downvotes:temp
+            })
+        })
+    }
+
     function deletePost(postid)
     {
         db.collection("posts").doc(postid).delete().then(function() {
@@ -101,14 +161,19 @@ var post_flag=0;
             querySnapshot.forEach(function(doc) {
                 var data = doc.data();
                 var id = doc.id;
+                console.log(data.upvotes);
                 console.log(id);                
                 $("#theposts").append(`
                 <li>
+
                 <div id="post_div" data-postid=${id} class="showpost">
+                
                     <div id="titlediv">
-                        <h6>created:   ${data.date}</h6>
-                        <button class ="delete btn-primary" data-postid=${id}>delete </button>
+                    <small>created:   ${data.date}</small>
+                       <div class ="deletediv"> <button class ="delete" data-postid=${id}>delete </button></div>
                         <h3 >${data.title}</h3></div>
+                        <p>upvotes: ${data.upvotes}</p>
+                        <p>downvotes: ${data.downvotes}</p>
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
                     </li> 
@@ -144,7 +209,7 @@ var post_flag=0;
     {
         var x= $("#commentInput").val();
         console.log(id);
-        console.log("creatting comment");
+        console.log("creating comment");
         var today = new Date();
         var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -153,6 +218,8 @@ var post_flag=0;
         db.collection(id).add({
             
              comment:x,
+             upvotes:0,
+             downvotes:0,
              date: currdate
          }) 
 
@@ -196,15 +263,15 @@ var post_flag=0;
                 console.log(data.comment);
                 console.log(id);                
                 $("#commentList").append(`
-                <li id=${id}>
-                <div id="comment_div">
-                
+                <li>
+                <ul id=${id}>
+                <div id="commentDiv" class="showcomment" data-commentid=${id}>
                     <p>date created: ${data.date}</p>
-                    <a class="showcomment" data-commentid=${id}>${data.comment}</a>
-                    </li> 
-                    <br/>
+                    <p>${data.comment}</p>
+                    </li></ul>
+                    </div>
 
-                </div><br/>`);
+                <br/>`);
                
             });
 
@@ -222,24 +289,42 @@ var post_flag=0;
         var name;   
              //THIS IS HOW YOU ACCESS EACH POST               
         post.get().then(doc => {
-
-            data = doc.data();
-            var id = doc.id;
             
+            var data = doc.data();
+            var id = doc.id;
+            console.log(id);
+            var viewcnt= data.views;
+            viewcnt++;
+            db.collection('posts').doc(postid).update({
+                views: viewcnt
+            })
+
              
             $("#mainscreen").html(`
             <div id="post_div">
             <p>created on:   ${data.date}</p>
+            <p>viewcount:${data.views}</p>
             <h1 align ="center">${data.title}</h1> <br/>
-            <h2 align ="center">${data.name}</h2> 
+            <h2 align ="center">${data.name}</h2>
+            <p> upvotes: ${data.upvotes}</p>
+            <p> downvotes: ${data.downvotes}</p>
+            
 
-            <ul id="users"> </ul>
+            <div class ="voteButtons">
+            <button width="10px" class="upvote" id="upvoteButton" data-postid=${id}>upvote</button>
+            &nbsp; &nbsp; 
+            <button width="10px" class="downvote" id="upvoteButton" data-postid=${id}>downvote</button>
             </div>
-            <button id="comment" class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+            </div>
+            <button id="comment" class="create_comment" data-commentid=${id}> create comment</button>
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
           $(".create_comment").on("click",createCommentClickHandler);
+          $(".downvote").off("click",downvoteHandler);
+          $(".downvote").on("click",downvoteHandler);
+          $(".upvote").off("click",upvoteHandler);
+          $(".upvote").on("click",upvoteHandler);
         getComments(postid);
 
 
@@ -264,7 +349,7 @@ var post_flag=0;
             data = doc.data();
             var id = doc.id;
         console.log(postid);
-         $("#mainscreen").html(`
+        postid.append(`
          <div id="post_div">
          <h1 align ="center">${postid}</h1> 
          <ul id="users"> </ul>
