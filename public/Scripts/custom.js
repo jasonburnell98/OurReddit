@@ -3,6 +3,37 @@ var post_flag=0;
 
 
 
+function create_comment(id)
+{
+    var content= $("#commentInput").val();
+    console.log(id);
+    console.log("creating comment");
+    var today = new Date();
+    var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
+    currdate= currdate +", "+time;
+
+    db.collection(id).add({
+         linkedto:id,
+         comment:content,
+         upvotes:0,
+         downvotes:0,
+         date: currdate
+     }) 
+
+     .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id);
+        //document.location.reload(true);
+
+        displaySinglePost(id);
+
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+
+}
+
     //function that creates a post
   function add()
         {
@@ -22,7 +53,7 @@ var post_flag=0;
             var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
             currdate= currdate +", "+time;
            db.collection("posts").add({
-                
+            
                 title: title,
                 name: content,
                 date: currdate,
@@ -46,7 +77,21 @@ var post_flag=0;
 
             //make auth 
             const auth = firebase.auth();   
+            var user = firebase.auth().currentUser;
+            var name, email, photoUrl, uid, emailVerified;
+            
+            if (user != null) {
+              name = user.displayName;
+              email = user.email;
+              photoUrl = user.photoURL;
+              emailVerified = user.emailVerified;
+              uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                               // this value to authenticate with your backend server, if
+                              // you have one. Use User.getToken() instead.                
+            }
 
+            //console.log(firebase.auth().currentUser.uid);
+            
            
 
         
@@ -205,36 +250,7 @@ var post_flag=0;
         displayLobby();
  
     //this functions creates comments
-    function create_comment(id)
-    {
-        var x= $("#commentInput").val();
-        console.log(id);
-        console.log("creating comment");
-        var today = new Date();
-        var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
-        currdate= currdate +", "+time;
-
-        db.collection(id).add({
-            
-             comment:x,
-             upvotes:0,
-             downvotes:0,
-             date: currdate
-         }) 
-
-         .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            //document.location.reload(true);
-
-            displaySinglePost(id);
-
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
-
-    }
+    
     
 
 
@@ -263,12 +279,12 @@ var post_flag=0;
                 console.log(data.comment);
                 console.log(id);                
                 $("#commentList").append(`
-                <li>
-                <ul id=${id}>
+                <li id=${id}>
+                
                 <div id="commentDiv" class="showcomment" data-commentid=${id}>
                     <p>date created: ${data.date}</p>
                     <p>${data.comment}</p>
-                    </li></ul>
+                    </li><
                     </div>
 
                 <br/>`);
@@ -300,7 +316,7 @@ var post_flag=0;
             })
 
              
-            
+
             $("#mainscreen").html(`
             <div id="post_div">
             <p>created on:   ${data.date}</p>

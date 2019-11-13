@@ -1,4 +1,6 @@
 
+
+
 // listen for auth status changes
   //call back function, takes in user as a parameter
 auth.onAuthStateChanged(user => {
