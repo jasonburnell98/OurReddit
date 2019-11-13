@@ -43,6 +43,7 @@ const logout = document.querySelector('#logout');
 logout.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut();
+  document.location.reload(true);
 });
 
 // login
@@ -74,6 +75,8 @@ loginForm.addEventListener('submit', (e) => {
 });
  
 });
+
+//AUTHENTICATE WITH GOOGLE
 var provider = new firebase.auth.GoogleAuthProvider();
 
 function googleSignin() {
@@ -94,3 +97,23 @@ function googleSignin() {
    });
 }
 
+
+// var provider = new firebase.auth.GithubAuthProvider();
+
+// function githubSignin() {
+//    firebase.auth().signInWithPopup(provider)
+   
+//    .then(function(result) {
+//       var token = result.credential.accessToken;
+//       var user = result.user;
+		
+//       console.log(token)
+//       console.log(user)
+//    }).catch(function(error) {
+//       var errorCode = error.code;
+//       var errorMessage = error.message;
+		
+//       console.log(error.code)
+//       console.log(error.message)
+//    });
+// }

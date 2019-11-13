@@ -170,7 +170,8 @@ var post_flag=0;
                 
                     <div id="titlediv">
                     <small>created:   ${data.date}</small>
-                       <div class ="deletediv"> <button class ="delete" data-postid=${id}>delete </button></div>
+                       <div class ="deletediv"> 
+                       <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
                         <h3 >${data.title}</h3></div>
                         <p>upvotes: ${data.upvotes}</p>
                         <p>downvotes: ${data.downvotes}</p>
@@ -302,7 +303,7 @@ var post_flag=0;
              
             
             $("#mainscreen").html(`
-            <div id="post_div">
+            <div id="post_div" style="text-align: center">
             <p>created on:   ${data.date}</p>
             <p>viewcount:${data.views}</p>
             <h1 align ="center">${data.title}</h1> <br/>
@@ -317,7 +318,7 @@ var post_flag=0;
             <button width="10px" class="downvote" id="upvoteButton" data-postid=${id}>downvote</button>
             </div>
             </div>
-            <button id="comment" class="create_comment" data-commentid=${id}> create comment</button>
+            <button id="comment" class="create_comment btn-primary" style="text-align:center"data-commentid=${id}>create this</button>
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
@@ -355,7 +356,7 @@ var post_flag=0;
          <h1 align ="center">${postid}</h1> 
          <ul id="users"> </ul>
          </div>
-           <button id="comment" class= "create_comment" data-commentid=${id}> create comment</button>
+           <button id="comment" class= "create_comment" data-commentid=${id}>create comment</button>
          </div>      <br/>`);
         
          $(".create_comment").off("click",createCommentClickHandler);
