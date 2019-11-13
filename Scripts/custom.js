@@ -107,7 +107,7 @@ var post_flag=0;
                 <div id="post_div" data-postid=${id} class="showpost">
                     <div id="titlediv">
                         <h6>created:   ${data.date}</h6>
-                        <button class ="delete" data-postid=${id}>delete </button>
+                        <button class ="delete btn-primary" data-postid=${id}>delete </button>
                         <h3 >${data.title}</h3></div>
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
@@ -198,6 +198,7 @@ var post_flag=0;
                 $("#commentList").append(`
                 <li id=${id}>
                 <div id="comment_div">
+                
                     <p>date created: ${data.date}</p>
                     <a class="showcomment" data-commentid=${id}>${data.comment}</a>
                     </li> 
@@ -234,7 +235,7 @@ var post_flag=0;
 
             <ul id="users"> </ul>
             </div>
-            <button id="comment" class="create_comment" data-commentid=${id}> create comment</button>
+            <button id="comment" class="create_comment btn-primary" data-commentid=${id}> create comment</button>
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);

@@ -31,6 +31,8 @@
         </head> 
 
     <body>
+
+
     <!--
                <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
                   <div class="btn white darken-4 col s10 m4">
@@ -48,7 +50,7 @@
                   </div> -->
 
     <!--BOOTSTRAP NAVBAR-->
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <nav id="topbar"class="navbar navbar-expand-lg navbar-inverse"  >
       <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="20" /></a>
         <!--<IMG SRC= "reddi.png" ALT= "some text" WIDTH = 30 HEIGHT = 20>&nbsp; -->
       <a href="index.html" class= "navbar-brand">OurReddit</a>
@@ -71,9 +73,11 @@
                   <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="TopCommunites">Top Communities</a>
               </div>
+              
             </li>
       &nbsp; &nbsp; &nbsp; 
-
+<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'">create
+</button>
     <!--USERNAME @
         <form class="form-inline">
             <div class="input-group">
@@ -145,28 +149,25 @@
     
   <!-- SIGN UP MODAL -->
   <div id="modal-signup" class="modal">
-    <div class="modal-content">
+    <div class="login">
     <span onclick="document.getElementById('modal-signup').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <h4>Sign up</h4><br />
+      <h1 text-align="center">Sign up</h1>
       <form id="signup-form">
-        <div class="input-field">
-          <input type="text" id="signup-username" required />
-          <label for="signup-username">User Name</label>
+        <div class="input-field" style="text-align:center">
+          <input type="text" id="signup-username" placeholder="User name"required />
+          
         </div>
 
-        <div class="input-field">
-          <input type="email" id="signup-email" required />
-          <label for="signup-email">Email address</label>
+        <div class="input-field" style="text-align:center">
+          <input type="email" id="signup-email" placeholder="email address" required />
+        
             </div>
-            <div class="input-field">
-           <input type="password" id="signup-password" required />
-          <label for="signup-password">Choose password</label>
+            <div class="input-field" style="text-align:center">
+           <input type="password" id="signup-password" placeholder="password"required />
+                 <button id="modalbuttons"text-align="center"   type="submit" class="btn btn-primary btn-block btn-large">Signup</button>
          </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button> 
-       <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
-       <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('modal-signup').style.display='none'" class="cancelbtn">Cancel</button>
-    </div>
+
+     
       </form>
     </div>
   </div>
@@ -174,25 +175,21 @@
 
   <!-- LOGIN MODAL -->
   <div id="modal-login" class="modal">
-    <div class="modal-content">
-      <span onclick="document.getElementById('modal-login').style.display='none'" class="close" title="Close Modal">&times;</span>
-       <h4>Login</h4><br />
+    <div class="login">
+     
+       <h1 text-align="center">Login</h1>
         <form id="login-form">
-         <div class="input-field">
-          <input type="email" id="login-email" required />
-           <label for="login-email">Email address</label>
+         <div class="input-field"style="text-align:center">
+          <input type="email" id="login-email" placeholder="email address" required />
+          
             </div>
-             <div class="input-field">
-              <input type="password" id="login-password" required />
-              <label for="login-password">Your password</label>
+             <div class="input-field"style="text-align:center">
+              <input type="password" id="login-password" placeholder="password" required />
+               <button id="modalbuttons" text-align="center" type="submit" class="btn btn-primary btn-large">Login</button>
             </div>
-         <button class="btn yellow darken-2 z-depth-0">Login</button>
-        <label>
-       <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-          <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('modal-login').style.display='none'" class="cancelbtn">Cancel</button>
-    </div>
+         
+                
+   
       </form>
     </div>
   </div>
@@ -209,23 +206,25 @@
 
   <!-- CREATE POST MODAL -->
   <div id="modal-create" class="modal" align="center">
-    <div class="modal-content">
-      <h4 text-align="center">Create post</h4>
+  
+    <div class="login">
+    <span onclick="document.getElementById('modal-create').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <h1 text-align="center">Create a Post</h1>
         <div class="input-field">
-         <label for="name">Post</label>
+         
           <input type= "text" id = "name" placeholder="enter name">
-         <br><label for="contents">Your content</label>
+         
           <input type= "text" id = "contents" placeholder="enter content">
-          <button class="btn btn-outline-success my-2 my-sm-0" onclick="add()">add post</button>
+         
+          <button id="modalbuttons" type="submit" class="btn btn-primary btn-block btn-large"onclick="add()">ADD POST</button>
          
           </div>
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('modal-create').style.display='none'" class="cancelbtn">Cancel</button>
-        </div>
+   
     
         </div>
   </div> 
-
+&nbsp;
+&nbsp;
 
   
 <div id = "mainscreen">...</div>
@@ -236,8 +235,7 @@
 
 <script type="template/string" id="mytemplate">
 
-<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'">create
-</button>
+
 <ul id="theposts" align="center"text-align="center"></ul>
 
 </script>

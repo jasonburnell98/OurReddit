@@ -39,7 +39,7 @@
     top: 0;
     right: 0;
     border-radius: 50%;
-    color: #004ef7;
+    color: #000000;
     text-align: center;
     font-size: 1.2em;
     transition: all 1s;
@@ -55,7 +55,7 @@
 }
 
 #mainform:hover .fa{
-    background: #004ef7;
+    background: #000000;
     color: white;
 }
 
@@ -69,3 +69,4 @@
     box-shadow: 1px 1px 1px grey;
     white-space: nowrap;
   }
+  
