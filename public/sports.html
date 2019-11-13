@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+             <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Sports</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+            <script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"</script>
+            <link rel = "stylesheet" href="Spreadsheets/custom.css">
+            <link rel = "stylesheet" href="Spreadsheets/toggle.css">
+            <link rel = "stylesheet" href="Spreadsheets/background.css">
+
+        </head> 
+
+
+        <body>
+            
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            <script src="Scripts/auth.js"></script>
+            <script src="Scripts/index.js"></script>
+               
+             <!--BOOTSTRAP NAVBAR-->
+             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+               <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="20" /></a>
+                 <!--<IMG SRC= "reddi.png" ALT= "some text" WIDTH = 30 HEIGHT = 20>&nbsp; -->
+               <a href="sports.html" class= "navbar-brand">SPORTS</a>
+             
+                 <!--COLLAPSIBLE BOOTSTRAP BUTTON-->
+                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+                     <span class = "navbar-toggler-icon"></span>
+                </button> 
+                 <div class= "collapse navbar-collapse" id = "navbarMenu" >
+                 <ul class="navbar-nav">
+                
+                         <!--DROPDOWN MENU-->
+                      <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                          aria-haspopup="true" aria-expanded="false">Popular</a>
+                         <div class="dropdown-menu" id = "mydropdown"aria-labelledby="navbarDropdown">
+                          <input type="text" placeholder="Filter" id="myInput" onkeyup="filterFunction()">
+                             <a class="dropdown-item" href="media.html">Media</a>
+                             <a class="dropdown-item" href="sports.html">Sports</a>
+                             <a class = "dropdown-item" href = "index.html">home</a>
+                           <div class="dropdown-divider"></div>
+                         <a class="dropdown-item" href="TopCommunites">Top Communities</a>
+                       </div>
+                     </li>
+               &nbsp; &nbsp; &nbsp; 
+         
+  
+         
+                 <!--SEARCH brand-->
+                   <form id = "mainform" action="">
+                        <input id = "mainsearch" type="search">
+                        <i class="fa fa-search"></i>
+                    </form>
+   
+                 
+                 </div>
+                      
+              <ul class="navbar-nav">
+                   <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                          aria-haspopup="true" aria-expanded="false">Account</a>
+                         <div class="dropdown-menu" id = "mydropdown"aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item">NightMode on/off
+                             <div class="toggle"></div></a>
+                             <div class="dropdown-divider"></div>
+                           
+                           <div class="dropdown-divider"></div>
+                           &nbsp; &nbsp; &nbsp;
+                           <a href="#" class="grey-text" id="logout">Logout</a>
+                       </div>
+                     </li>
+                     </ul>
+         
+             
+                          <!--LOGIN BUTTONS-->
+                 <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
+                 &nbsp;
+                 <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
+               &nbsp;
+         
+         
+               <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
+         
+             </nav> 
+             </body>
