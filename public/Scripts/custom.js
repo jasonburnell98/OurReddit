@@ -57,8 +57,7 @@ function create_comment(id)
                 date: currdate,
                 votes:0,
                 views:0
-                
-                
+                             
             }) 
           
             .then(function(doc) {
@@ -372,8 +371,11 @@ function create_comment(id)
                         <h1 id="scoreCounter">${data.votes}</h1>
                         <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
-                    <h1 align ="center">${data.name}</h1>              
-                  </div>
+                        <br/>
+                        <div id="content">
+                            <p id="description"align ="center">${data.name}</p>              
+                        </div>
+             </div>
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>
             <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
