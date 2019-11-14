@@ -225,7 +225,7 @@ function create_comment(id)
                 
                     <div id="titlediv">
                     <small>created:   ${data.date}</small>
-                       <div class ="deletediv"> <button class ="delete" data-postid=${id}>delete </button></div>
+                       <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
                         <h3 >${data.title}</h3></div>
                         <p>upvotes: ${data.upvotes}</p>
                         <p>downvotes: ${data.downvotes}</p>
@@ -325,10 +325,10 @@ function create_comment(id)
                     
                         <div id="titlediv">
                         <small>created:   ${data.date}</small>
-                           <div class ="deletediv"> <button class ="delete" data-postid=${id}>delete </button></div>
+                           <div class ="deletediv"> <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
                             <h3 >${data.title}</h3></div>
-                            <p>upvotes: ${data.upvotes}</p>
-                            <p>downvotes: ${data.downvotes}</p>
+                            <p id = "upv">upvotes: ${data.upvotes}</p>
+                            <p id = "downv">downvotes: ${data.downvotes}</p>
                         <br>
                         <a class="showpost" data-postid=${id}>${data.name}</a>
                         </li> 
@@ -377,14 +377,14 @@ function create_comment(id)
             <p> upvotes: ${data.upvotes}</p>
             <p> downvotes: ${data.downvotes}</p>
             
-
-            <div class ="voteButtons">
-            <button width="10px" class="upvote" id="upvoteButton" data-postid=${id}>upvote</button>
-            &nbsp; &nbsp; 
-            <button width="10px" class="downvote" id="upvoteButton" data-postid=${id}>downvote</button>
+      
+           
+            <button width="10px" class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+           
+            <button width="10px" class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+          
             </div>
-            </div>
-            <button id="comment" class="create_comment" data-commentid=${id}> create comment</button>
+            <button id="comment" class="create_comment btn-primary" data-commentid=${id}> create shit</button>
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
