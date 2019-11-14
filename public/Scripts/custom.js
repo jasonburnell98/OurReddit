@@ -365,21 +365,17 @@ function create_comment(id)
             $("#mainscreen").html(`
             <div id="post_div">
             <p>created on:   ${data.date}</p>
-            <p>viewcount:${data.views}</p>
-            <h1 align ="center">${data.title}</h1> <br/>
-            <h2 align ="center">${data.name}</h2>
-            <p> votes: ${data.votes}</p>
-          
-            
-      
-           
-            <button width="10px" class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
-           
-            <button width="10px" class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
-          
-            </div>
-            <div id = "commentbtn">
-            <input type="text" id = "commentInput" placeholder="enter comment"></input>
+                <p>viewcount:${data.views}</p>
+                     <h2 align ="center">${data.title}</h2>
+                        <div>
+                        <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                        <h1 id="scoreCounter">${data.votes}</h1>
+                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                        </div>
+                    <h1 align ="center">${data.name}</h1>              
+                  </div>
+                 <div id = "commentbtn">
+                <input type="text" id = "commentInput" placeholder="enter comment"></input>
             <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
             </div>
           </div>      <br/>`);

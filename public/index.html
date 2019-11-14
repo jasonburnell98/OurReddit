@@ -1,11 +1,12 @@
 <!--
 
-  1. UPVOTE DOWNVOTE BUTTONS (CSS)
+  1. UPVOTE DOWNVOTE BUTTONS (FIX CSS and REALTIME UPDATE)
   2. GITHUB AND FB AUTHENTICATION
-  3. SEARCH POSTS
+  3. Let pressing enter search posts and create comments 
   4. ADD IMAGES OR LINKS TO POSTS
-  5. POST SIZE
-  6. ENDPOINTS
+  5. Tabs on create a post to allow for MEDIA, SPORTS etc. specific Post
+  6. update media sports etc.
+  7. ENDPOINTS
 -->
 
 
@@ -169,8 +170,25 @@
     </div>
   </div>
 
+   <!-- TEST POST MODAL -->
+   <div id="modal-create" class="modal">
+      <div id="login-box"> 
+        <span onclick="document.getElementById('modal-create').style.display='none'" class="close" title="Close Modal">&times;</span>
+         <div style="text-align: center">
+            <h1>Create a Post</h1></div>
+               <div class="form-group">
+                <textarea class="form-control" id = "name" rows="1"placeholder="Title"></textarea>
+                  <textarea class="form-control" id = "contents" rows="7"placeholder="Text"></textarea>
+                  <div id="postbutton">
+                <button id="modalbuttons" type="submit" class=" btn btn-primary  "onclick="add()">POST</button>
+              <button id="modalbuttons" type="submit" class=" btn btn-default "onclick="document.getElementById('modal-create').style.display='none'" >SAVE DRAFT</button>
+            </div>
+          </div>
+      </div>
+    </div>
 
-  <!-- CREATE POST MODAL -->
+
+  <!-- CREATE POST MODAL 
   <div id="modal-create" class="modal" >
       <div class="login">
        <span onclick="document.getElementById('modal-create').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -181,7 +199,14 @@
               <button id="modalbuttons" type="submit" class="btn btn-primary btn-block btn-large"onclick="add()">ADD POST</button>
           </div>
       </div>
-  </div> 
+  </div>-->
+
+
+
+
+
+
+  
         &nbsp;
     
             <div id = "mainscreen">...</div>
@@ -195,7 +220,7 @@
 
 
 <script type ="template/string" id ="comments">
-   <input type="text" id = "commentInput" placeholder="enter comment"></input>
+
    <ul id="commentList" align="center"></ul>
 </script>
 

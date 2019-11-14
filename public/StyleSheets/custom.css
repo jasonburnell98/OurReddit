@@ -377,3 +377,69 @@ button.social-signin.google {
   background: #DD4B39;
 }
 
+.main {
+  text-align: center;
+  position: relative;
+
+  transform: translate(-50%, -50%);
+}
+
+h1 {
+  font-family: sans-serif;
+}
+
+.vote {
+  border: none;
+  background-color: $background-color; 
+  width: 47px;
+  height: 21.5px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  &:active {
+    outline: none;
+    border: none;
+  }
+  
+  &:focus {
+    outline: 0;
+  }
+}
+
+.upArrow {
+  x: 0px;
+  y: 0px;
+  enable-background: new 0 0 11.5 6.4;
+  path {
+    fill: #BBBBBB;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    margin: 0;
+  }
+}
+
+.downArrow {
+  x: 0px;
+  y: 0px;
+  enable-background: new 0 0 11.5 6.4;
+  path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    fill: #BBBBBB;
+  }
+}
+
+#upButton :hover {
+  fill: #6CC576;
+  cursor: pointer;
+}
+
+#downButton :hover {
+  fill: #FF586C;
+  cursor: pointer;
+}
+
+#postbutton {
+
+  text-align: right;
+}
