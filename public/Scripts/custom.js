@@ -218,10 +218,18 @@ function create_comment(id)
                 
                     <div id="titlediv">
                     <small>created:   ${data.date}</small>
+                    <p>views: ${data.views}</p>
+
                        <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
                         <h3 >${data.title}</h3></div>
-                        <p id="upvotes">votes: ${data.votes}</p>
-                       
+                    
+                        <div id= "buttondiv">
+                        <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                        <h2 id="scoreCounter">${data.votes}</h1>
+                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                        </div>
+                        
+
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
                     </li> 
@@ -231,7 +239,10 @@ function create_comment(id)
 
             $(".showpost").off("click",clickHandler);
             $(".showpost").on("click",clickHandler);
-
+            $(".downvote").off("click",downvoteHandler);
+            $(".downvote").on("click",downvoteHandler);
+            $(".upvote").off("click",upvoteHandler);
+            $(".upvote").on("click",upvoteHandler);
             $(".delete").off("click",deleteHandler);
             $(".delete").on("click",deleteHandler);
 
@@ -362,19 +373,21 @@ function create_comment(id)
             })             
 
             $("#mainscreen").html(`
-            <div id="post_div">
-            <p>created on:   ${data.date}</p>
-                <p>viewcount:${data.views}</p>
-                     <h2 align ="center">${data.title}</h2>
-                        <div>
+            <div id="post_div" data-postid=${id} class="showpost">
+                
+            <div id="titlediv">
+            <small>created:   ${data.date}</small>
+            <p>views: ${data.views}</p>
+               <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
+                <h3 >${data.title}</h3></div>
+            
+                     <div id= "buttondiv">
                         <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
-                        <h1 id="scoreCounter">${data.votes}</h1>
-                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
-                        </div>
+                        <h2 id="scoreCounter">${data.votes}</h1>
+                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button> 
+                     </div>
                         <br/>
-                        <div id="content">
-                            <p id="description"align ="center">${data.name}</p>              
-                        </div>
+                        <a align="center"class="showpost" data-postid=${id}>${data.name}</a>
              </div>
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>
