@@ -1,7 +1,7 @@
 var createComment=0;
 var post_flag=0;
 
-
+          
 function create_comment(id)
 {
     var content= $("#commentInput").val();
@@ -77,15 +77,7 @@ function create_comment(id)
             var user = firebase.auth().currentUser;
             var name, email, photoUrl, uid, emailVerified;
             
-            if (user != null) {
-              name = user.displayName;
-              email = user.email;
-              photoUrl = user.photoURL;
-              emailVerified = user.emailVerified;
-              uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                               // this value to authenticate with your backend server, if
-                              // you have one. Use User.getToken() instead.                
-            }
+            
 
             //console.log(firebase.auth().currentUser.uid);
             
