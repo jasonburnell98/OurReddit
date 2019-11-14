@@ -118,6 +118,9 @@ background-color:#282828;
   margin: 0 auto;
   float: none;
 }
+#commentbtn {
+  text-align: center;
+}
 
 #deletepost{
   float: right;

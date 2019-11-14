@@ -384,7 +384,10 @@ function create_comment(id)
             <button width="10px" class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
           
             </div>
-            <button id="comment" class="create_comment btn-primary" data-commentid=${id}> create shit</button>
+            <div id = "commentbtn">
+            <input type="text" id = "commentInput" placeholder="enter comment"></input>
+            <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+            </div>
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
