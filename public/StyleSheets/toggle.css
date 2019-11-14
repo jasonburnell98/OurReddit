@@ -78,6 +78,7 @@ body.night
 {
     background: #00151f;
 }
+
 .toggle
 {
 
@@ -137,5 +138,8 @@ body.night .content h1,
 body.night .content p
 {
     color: #fff;
+}
+.navbar.night {
+    background-color:black;
 }
  
