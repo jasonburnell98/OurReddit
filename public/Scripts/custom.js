@@ -2,7 +2,6 @@ var createComment=0;
 var post_flag=0;
 
 
-
 function create_comment(id)
 {
     var content= $("#commentInput").val();
@@ -142,6 +141,17 @@ function create_comment(id)
         downvote(postid);
     }
 
+    let searchHandler= function(evt)
+    {
+        var content= $("#mainsearch").val();
+        console.log(content);
+        displaySearchResults(content);
+    }
+
+    $("#searchBar").off("click",searchHandler);
+    $("#searchBar").on("click",searchHandler);
+   
+   
     function upvote(id)
     {
         const post = db.collection('posts').doc(id);
@@ -215,8 +225,7 @@ function create_comment(id)
                 
                     <div id="titlediv">
                     <small>created:   ${data.date}</small>
-                       <div class ="deletediv"> 
-                       <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
+                       <div class ="deletediv"> <button class ="delete" data-postid=${id}>delete </button></div>
                         <h3 >${data.title}</h3></div>
                         <p>upvotes: ${data.upvotes}</p>
                         <p>downvotes: ${data.downvotes}</p>
@@ -283,9 +292,9 @@ function create_comment(id)
                 <li id=${id}>
                 
                 <div id="commentDiv" class="showcomment" data-commentid=${id}>
-                    <p>date created: ${data.date}</p>
-                    <p>${data.comment}</p>
-                    </li><
+                    <p id= "comment"color="white">date created: ${data.date}</p>
+                    <p id ="comment">${data.comment}</p>
+                    </li> 
                     </div>
 
                 <br/>`);
@@ -298,6 +307,49 @@ function create_comment(id)
         
     }
 
+    function displaySearchResults(search)
+    {
+        db.collection("posts").where("title", "==", search)
+    .get()
+    .then(function(querySnapshot) {
+        $("#theposts").html('');
+        querySnapshot.forEach(function(doc) {
+                    var data = doc.data();
+                    var id = doc.id;
+                    console.log(data.upvotes);
+                    console.log(id);                
+                    $("#theposts").append(`
+                    <li>
+    
+                    <div id="post_div" data-postid=${id} class="showpost">
+                    
+                        <div id="titlediv">
+                        <small>created:   ${data.date}</small>
+                           <div class ="deletediv"> <button class ="delete" data-postid=${id}>delete </button></div>
+                            <h3 >${data.title}</h3></div>
+                            <p>upvotes: ${data.upvotes}</p>
+                            <p>downvotes: ${data.downvotes}</p>
+                        <br>
+                        <a class="showpost" data-postid=${id}>${data.name}</a>
+                        </li> 
+    
+                    </div>      <br/>`);
+                });
+    
+                $(".showpost").off("click",clickHandler);
+                $(".showpost").on("click",clickHandler);
+    
+                $(".delete").off("click",deleteHandler);
+                $(".delete").on("click",deleteHandler);
+    
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+  
+    }
+
+    
     //display a single post
     function displaySinglePost(postid){
      
@@ -314,12 +366,10 @@ function create_comment(id)
             viewcnt++;
             db.collection('posts').doc(postid).update({
                 views: viewcnt
-            })
-
-             
+            })             
 
             $("#mainscreen").html(`
-            <div id="post_div" style="text-align: center">
+            <div id="post_div">
             <p>created on:   ${data.date}</p>
             <p>viewcount:${data.views}</p>
             <h1 align ="center">${data.title}</h1> <br/>
@@ -334,7 +384,7 @@ function create_comment(id)
             <button width="10px" class="downvote" id="upvoteButton" data-postid=${id}>downvote</button>
             </div>
             </div>
-            <button id="comment" class="create_comment btn-primary" style="text-align:center"data-commentid=${id}>create this</button>
+            <button id="comment" class="create_comment" data-commentid=${id}> create comment</button>
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
@@ -359,7 +409,7 @@ function create_comment(id)
         // let x = firebase.database().ref(postid);
         
         console.log(postid);
-        const post = db.collection('posts').doc(postid);
+        const post = db.collection(postid);
         var name;   
              //THIS IS HOW YOU ACCESS EACH POST               
         post.get().then(doc => {
@@ -367,12 +417,12 @@ function create_comment(id)
             data = doc.data();
             var id = doc.id;
         console.log(postid);
-        postid.append(`
+        $("#commentList").append(`
          <div id="post_div">
          <h1 align ="center">${postid}</h1> 
          <ul id="users"> </ul>
          </div>
-           <button id="comment" class= "create_comment" data-commentid=${id}>create comment</button>
+           <button id="comment" class= "create_comment" data-commentid=${id}> create comment</button>
          </div>      <br/>`);
         
          $(".create_comment").off("click",createCommentClickHandler);
