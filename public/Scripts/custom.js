@@ -373,9 +373,9 @@ function create_comment(id)
                         <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
                         <br/>
-                        <div id="content">
+                      
                             <p id="description"align ="center">${data.name}</p>              
-                        </div>
+                        
              </div>
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>
