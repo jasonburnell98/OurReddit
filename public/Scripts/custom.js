@@ -140,6 +140,7 @@ function create_comment(id)
 
     $("#searchBar").off("click",searchHandler);
     $("#searchBar").on("click",searchHandler);
+    
    
    
     function upvote(id)
@@ -213,19 +214,19 @@ function create_comment(id)
                 console.log(data.upvotes);
                 console.log(id);                
                 $("#theposts").append(`
-                <li>
+                <div>
 
                 <div id="post_div" data-postid=${id} class="showpost">
                 
                     <div id="titlediv">
                     <small>created:   ${data.date}</small>
                        <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
-                        <h3 >${data.title}</h3></div>
+                        <h1 >${data.title}</h1></div>
                         <p id="upvotes">votes: ${data.votes}</p>
                        
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
-                    </li> 
+                  </div>
 
                 </div>      <br/>`);
             });
@@ -372,8 +373,11 @@ function create_comment(id)
                         <h1 id="scoreCounter">${data.votes}</h1>
                         <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
-                    <h1 align ="center">${data.name}</h1>              
-                  </div>
+                        &nbsp;
+                        
+                    <h1 align ="center">${data.name}</h1>
+                                  
+                  </div> 
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>
             <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>

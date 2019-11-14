@@ -53,7 +53,7 @@
 
     <!--BOOTSTRAP NAVBAR-->
     <nav id="topbar"class="navbar navbar-expand-lg navbar-inverse"  >
-      <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="20" /></a>
+      <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="30" /></a>
         <!--<IMG SRC= "reddi.png" ALT= "some text" WIDTH = 30 HEIGHT = 20>&nbsp; -->
       <a href="index.html" id = "ourredd" class= "navbar-brand" font-style="VAG rounded">OurReddit</a>
     
@@ -179,6 +179,7 @@
                <div class="form-group">
                 <textarea class="form-control" id = "name" rows="1"placeholder="Title"></textarea>
                   <textarea class="form-control" id = "contents" rows="7"placeholder="Text"></textarea>
+                  &nbsp;
                   <div id="postbutton">
                 <button id="modalbuttons" type="submit" class=" btn btn-primary  "onclick="add()">POST</button>
               <button id="modalbuttons" type="submit" class=" btn btn-default "onclick="document.getElementById('modal-create').style.display='none'" >SAVE DRAFT</button>
@@ -215,7 +216,7 @@
 
 
 <script type="template/string" id="mytemplate">
-    <ul id="theposts" align="center"text-align="center"></ul>
+    <div id="theposts" align="center"text-align="center"></div>
 </script>
 
 
@@ -263,21 +264,7 @@ function filterFunction() {
     }
   }
 }
-function searchFunction() {
-  var input, search, ul, li, a, i;
-  input = document.getElementById("myInput");
-  search = input.value.toUpperCase();
-  div = document.getElementById("title");
-  content = getElementsByTagName("content");
-  for (i = 0; i < content.length; i++) {
-    txtValue = content[i].textContent || content[i].innerText;
-    if (txtValue.toUpperCase().indexOf(search) > -1) {
-      content[i].style.display = "";
-    } else {
-      content[i].style.display = "none";
-    }
-  }
-}
+
 </script>
     
             <!-- The core Firebase JS SDK is always required and must be listed first -->
