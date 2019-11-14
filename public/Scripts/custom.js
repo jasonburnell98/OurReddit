@@ -1,7 +1,7 @@
 var createComment=0;
 var post_flag=0;
 
-
+          
 function create_comment(id)
 {
     var content= $("#commentInput").val();
@@ -15,8 +15,7 @@ function create_comment(id)
     db.collection(id).add({
          linkedto:id,
          comment:content,
-         upvotes:0,
-         downvotes:0,
+         votes:0,
          date: currdate
      }) 
 
@@ -56,8 +55,7 @@ function create_comment(id)
                 title: title,
                 name: content,
                 date: currdate,
-                upvotes:0,
-                downvotes:0,
+                votes:0,
                 views:0
                 
                 
@@ -79,15 +77,7 @@ function create_comment(id)
             var user = firebase.auth().currentUser;
             var name, email, photoUrl, uid, emailVerified;
             
-            if (user != null) {
-              name = user.displayName;
-              email = user.email;
-              photoUrl = user.photoURL;
-              emailVerified = user.emailVerified;
-              uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-                               // this value to authenticate with your backend server, if
-                              // you have one. Use User.getToken() instead.                
-            }
+            
 
             //console.log(firebase.auth().currentUser.uid);
             
@@ -160,11 +150,11 @@ function create_comment(id)
         post.get().then(doc => {
             
             var data = doc.data();
-            temp= data.upvotes;
+            temp= data.votes;
             temp++;
         
             db.collection('posts').doc(id).update({
-                upvotes:temp
+                votes:temp
             })
     
 })
@@ -178,12 +168,16 @@ function create_comment(id)
         post.get().then(doc => {
             
             var data = doc.data();
-            temp= data.downvotes;
-            temp++;
-        
-            db.collection('posts').doc(id).update({
-                downvotes:temp
-            })
+            temp= data.votes;
+            if(temp>0)
+            {      
+                temp--;
+            
+                db.collection('posts').doc(id).update({
+                    votes:temp
+                })
+        }
+
         })
     }
 
@@ -227,8 +221,8 @@ function create_comment(id)
                     <small>created:   ${data.date}</small>
                        <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
                         <h3 >${data.title}</h3></div>
-                        <p>upvotes: ${data.upvotes}</p>
-                        <p>downvotes: ${data.downvotes}</p>
+                        <p id="upvotes">votes: ${data.votes}</p>
+                       
                     <br>
                     <a class="showpost" data-postid=${id}>${data.name}</a>
                     </li> 
@@ -316,7 +310,7 @@ function create_comment(id)
         querySnapshot.forEach(function(doc) {
                     var data = doc.data();
                     var id = doc.id;
-                    console.log(data.upvotes);
+                    console.log(data.votes);
                     console.log(id);                
                     $("#theposts").append(`
                     <li>
@@ -327,8 +321,8 @@ function create_comment(id)
                         <small>created:   ${data.date}</small>
                            <div class ="deletediv"> <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
                             <h3 >${data.title}</h3></div>
-                            <p id = "upv">upvotes: ${data.upvotes}</p>
-                            <p id = "downv">downvotes: ${data.downvotes}</p>
+                            <p id = "upvotes">votes: ${data.votes}</p>
+                        
                         <br>
                         <a class="showpost" data-postid=${id}>${data.name}</a>
                         </li> 
@@ -374,8 +368,8 @@ function create_comment(id)
             <p>viewcount:${data.views}</p>
             <h1 align ="center">${data.title}</h1> <br/>
             <h2 align ="center">${data.name}</h2>
-            <p> upvotes: ${data.upvotes}</p>
-            <p> downvotes: ${data.downvotes}</p>
+            <p> votes: ${data.votes}</p>
+          
             
       
            
