@@ -1,40 +1,56 @@
 var createComment=0;
 var post_flag=0;
+var uid;
 
-          
+const auth = firebase.auth();   
+
 function create_comment(id)
 {
-    var content= $("#commentInput").val();
-    console.log(id);
-    console.log("creating comment");
-    var today = new Date();
-    var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
-    currdate= currdate +", "+time;
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+              // User logged in already or has just logged in.
+            console.log("uid " +user.uid);
 
-    db.collection(id).add({
-         linkedto:id,
-         comment:content,
-         votes:0,
-         date: currdate
-     }) 
+            var content= $("#commentInput").val();
+            console.log(id);
+            console.log("creating comment");
+            var today = new Date();
+            var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
+            currdate= currdate +", "+time;
 
-     .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-        //document.location.reload(true);
+            db.collection(id).add({
+                author: user.uid,
+                linkedto:id,
+                comment:content,
+                votes:0,
+                date: currdate
+            }) 
 
-        displaySinglePost(id);
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                //document.location.reload(true);
 
+                displaySinglePost(id);
+
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+
+        }
+
+        else{
+            alert("please log in to create a comment");
+        }
     })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
-
 }
+
 
     //function that creates a post
   function add()
         {
+
             var title = $("#name").val();
             var content = $("#contents").val();
             var today = new Date();
@@ -45,41 +61,68 @@ function create_comment(id)
             }
 
             else{
-            
-            var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var today = new Date();
-            var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
-            currdate= currdate +", "+time;
-           db.collection("posts").add({
-            
+                firebase.auth().onAuthStateChanged((user) => {
+                if (user){
+                      // User logged in already or has just logged in.
+                    
+                    var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                    
+                    var username;
+                    var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    currdate= currdate +", "+time;
+                   
+                    db.collection("users").where("uid", "==", user.uid)
+                        .get()
+                        .then(function(querySnapshot) {
+                            querySnapshot.forEach(function(doc) {
+                                // doc.data() is never undefined for query doc snapshots
+                                alert(doc.id, " => ", doc.data());
+                            });
+                        })
+                        .catch(function(error) {
+                            console.log("Error getting documents: ", error);
+                        });
+
+                   //const users = db.collection('users').doc(user.uid);
+                    //THIS IS HOW YOU ACCESS EACH POST               
+                    // users.get().then(doc => {
+                    //     //console.log(doc.data());
+                    //     var data = doc.data();
+                    //     // alert(doc);
+                    //     //username = data.username;
+                
+                    // });
+
+                
+            db.collection("posts").add({
+                username: 1,
+                author:user.uid,
                 title: title,
                 name: content,
                 date: currdate,
                 votes:0,
                 views:0
-                             
+                                
             }) 
-          
+            
             .then(function(doc) {
                 console.log("Document written with ID: ", doc.data);
                 document.location.reload(true);
+                console.log("uid is: "+uid);
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
-            });
+            })
         }
+
+     else {
+         alert("please log in before making a post")
+         console.log("no user");
+      }
+    })
     }
-        
-
+        }        
             //make auth 
-            const auth = firebase.auth();   
-            var user = firebase.auth().currentUser;
-            var name, email, photoUrl, uid, emailVerified;
-            
-            
-
-            //console.log(firebase.auth().currentUser.uid);
-            
            
 
         
@@ -210,35 +253,93 @@ function create_comment(id)
             querySnapshot.forEach(function(doc) {
                 var data = doc.data();
                 var id = doc.id;
+                var uid=data.author;
                 console.log(data.upvotes);
-                console.log(id);                
-                $("#theposts").append(`
-                <div>
+                console.log(id);        
+               
+                firebase.auth().onAuthStateChanged((user) => {
+                     if(!user){
 
-                <div id="post_div" data-postid=${id} class="showpost">
-                
-                    <div id="titlediv">
-                    <small>created:   ${data.date}</small>
-                       <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
-                        <h1 >${data.title}</h1></div>
-                        <p id="upvotes">votes: ${data.votes}</p>
+                        $("#theposts").append(`
                        
-                    <br>
-                    <a class="showpost" data-postid=${id}>${data.name}</a>
-                  </div>
+                        <div id="post_div" data-postid=${id} class="showpost">
+                                            
+                            <div id="titlediv">
+                            <h1> created by: ${data.username}</h1>
+                            <small>created:   ${data.date}</small>
+                      
+                            <h1 >${data.title}</h1></div>
+                            <p id="upvotes">votes: ${data.votes}</p>
+                            
+                            <br>
+                            
+                            <p id="description">${data.name}</p>
+                        </div>
 
-                </div>      <br/>`);
-            });
+                        </div>      <br/>`);
 
-            $(".showpost").off("click",clickHandler);
-            $(".showpost").on("click",clickHandler);
+                        $(".showpost").off("click",clickHandler);
+                        $(".showpost").on("click",clickHandler);
+                    }
 
-            $(".delete").off("click",deleteHandler);
-            $(".delete").on("click",deleteHandler);
+                    else if(user.uid !=uid){
+                      
+
+                        $("#theposts").append(`
+                        <div>
+
+                        <div id="post_div" data-postid=${id} class="showpost">
+                        
+                            <div id="titlediv">
+                            <small>created:   ${data.date}</small>
+            
+                            <h1 >${data.title}</h1></div>
+                            <p id="upvotes">votes: ${data.votes}</p>
+                            
+                            <br>
+                            <a class="showpost" data-postid=${id}>${data.name}</a>
+                        </div>
+
+                        </div>      <br/>`);
+
+                        $(".showpost").off("click",clickHandler);
+                        $(".showpost").on("click",clickHandler);
+                    }
+
+                    else if(user.uid == uid)
+                    {
+                        console.log("postid: "+uid);
+                        console.log("uid:"+user.uid);
+                            
+                        $("#theposts").append(`
+                        <div>
+
+                        <div id="post_div" data-postid=${id} class="showpost">
+                        
+                            <div id="titlediv">
+                            <small>created:   ${data.date}</small>
+                            <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
+                                <h1 >${data.title}</h1></div>
+                                <p id="upvotes">votes: ${data.votes}</p>
+                            
+                            <br>
+                            <a class="showpost" data-postid=${id}>${data.name}</a>
+                        </div>
+
+                        </div>      <br/>`);
+
+                    $(".showpost").off("click",clickHandler);
+                    $(".showpost").on("click",clickHandler);
+
+                    $(".delete").off("click",deleteHandler);
+                    $(".delete").on("click",deleteHandler);
+                    }
+                })
 
         });
         
-    }
+    })
+}
 
     //displays all the posts
     let displayLobby = function(){
@@ -363,19 +464,27 @@ function create_comment(id)
             })             
 
             $("#mainscreen").html(`
-            <div id="post_div">
-            <p>created on:   ${data.date}</p>
-                <p>viewcount:${data.views}</p>
-                     <h2 align ="center">${data.title}</h2>
-                        <div>
-                        <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
-                        <h1 id="scoreCounter">${data.votes}</h1>
-                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+            <div id="post_div" data-postid=${id}>
+                    <div id="titlediv">
+                    <h1 >${data.title}</h1></div>
+                    <small>created:   ${data.date}</small>
+                       <div class ="deletediv"> 
+                            <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
+                       </div>
+
+                       <p id="upvotes"><small>views: ${data.views}</small></p> 
+                        <div id="votediv">
+                            <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                            <h1 id="scoreCounter">${data.votes}</h1>
+                            <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
                         <br/>
-                        <div id="content">
-                            <p id="description"align ="center">${data.name}</p>              
+                        <div id="descdiv">
+                            <p id="description"align ="center">${data.name}</p>     
                         </div>
+
+                            
+                   
              </div>
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>

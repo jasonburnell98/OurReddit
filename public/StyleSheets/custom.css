@@ -6,6 +6,22 @@ body { font-family: 'Montserrat',sans-serif }
 	height: 20px;
 	width:5px;
 }
+
+#votediv{
+  width: 5%;
+  height: 100%;
+  top:50%;
+  position: relative;
+}
+
+#descdiv{
+  width: 90%;
+  height: 50%;
+  top:0%;
+  left:10%;
+  position: relative;
+  background:orange;
+}
 #upvoteButton {
  
   left: 100;
@@ -14,7 +30,6 @@ body { font-family: 'Montserrat',sans-serif }
 
 }
 #downvoteButton {
-  position: absolute;
   left: 100;
   top:100;
  z-index: 1001;
@@ -58,6 +73,10 @@ body { font-family: 'Montserrat',sans-serif }
   z-index: 100;
 
 }
+
+.content{
+  color:white;
+}
 .showpost {
   margin: auto;
   color: white;
@@ -67,13 +86,8 @@ body { font-family: 'Montserrat',sans-serif }
   border-radius: 3px;
   
 	font-family: 'Open Sans', sans-serif;
-	background: #092756;
-	background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+	color: white;
+
 }
 
 #titlediv {

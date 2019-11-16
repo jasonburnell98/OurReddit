@@ -5,13 +5,11 @@
   //call back function, takes in user as a parameter
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log('user logged in: ', user.email);
-    console.log('user logged in: ', user.username);
-    
+    console.log('user logged in: ', user.email);   
     
   } else {
     console.log('user logged out');
-    alert("User logged out");
+  
   }
 })
 
@@ -25,7 +23,7 @@ signupForm.addEventListener('submit', (e) => {
   const password = signupForm['signup-password'].value;
   const username= signupForm['signup-username'].value;
   console.log(password);
-  console.log(username);
+  alert(username);
   console.log(email);  
 
 
@@ -35,10 +33,32 @@ signupForm.addEventListener('submit', (e) => {
     const modal = document.querySelector('#modal-signup');
     M.Modal.getInstance(modal).close();
     signupForm.reset();
-    document.location.reload(true);
+    firebase.auth().onAuthStateChanged((cred) => {
+      if (cred) {
+        
+        console.log(cred.uid);
+
+        db.collection("users").add({
+          username: username,
+          emailaddress:email,
+          uid:cred.uid
+      })
+
+      .then(function(doc) {
+        console.log("Document written with ID: ", doc.data);
+        document.location.reload(true);
+        console.log("uid is: "+uid);
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+
+      }
+     
+    //document.location.reload(true);
   });
 //  document.location.reload(true);
-});
+});})
 
 // logout
 const logout = document.querySelector('#logout');
