@@ -387,7 +387,9 @@ function create_comment(id)
                 <div id=${id}>
                 
                 <div id="commentDiv" class="showcomment" data-commentid=${id}>
+                
                 <div class="gradient-border" id="box">
+                <span class="commentclose" title="commentclose">&times;</span>
                     <div id="commentdate">
                     <p color="white">
                     <small>
