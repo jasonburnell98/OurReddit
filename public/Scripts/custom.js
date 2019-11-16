@@ -384,12 +384,19 @@ function create_comment(id)
                 console.log(data.comment);
                 console.log(id);                
                 $("#commentList").append(`
-                <li id=${id}>
+                <div id=${id}>
                 
                 <div id="commentDiv" class="showcomment" data-commentid=${id}>
-                    <p id= "comment"color="white">date created: ${data.date}</p>
-                    <p id ="comment">${data.comment}</p>
-                    </li> 
+                <div class="gradient-border" id="box">
+                    <div id="commentdate">
+                    <p color="white">
+                    <small>
+                    date created: ${data.date}</p> </small>
+                    </div> <br>
+                    <div id="descdiv">
+                    <p>${data.comment}</p> </div>
+                    </div>
+                    </div>  
                     </div>
 
                 <br/>`);
