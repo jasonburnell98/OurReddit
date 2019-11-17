@@ -1,6 +1,7 @@
 var createComment=0;
 var post_flag=0;
 var uid;
+var selectedFile;
 
 const auth = firebase.auth();   
 
@@ -378,7 +379,7 @@ function displayuserPosts(username)
                            </div>
     
                            <p id="upvotes"><small>views: ${data.views}</small></p> 
-                            <div id="votediv">
+                            <div id="voterdiv">
                                 <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
                                 <h1 id="scoreCounter">${data.votes}</h1>
                                 <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
@@ -391,11 +392,7 @@ function displayuserPosts(username)
                                 
                        
                             </div></div>
-                                <div id = "commentbtn">
-                                <input type="text" id = "commentInput" placeholder="enter comment"></input>
-                            <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
-                        
-                        </div>      <br/>`);
+                                   <br/>`);
               $(".showpost").off("click",clickHandler);
               $(".showpost").on("click",clickHandler);
               $(".create_comment").off("click",createCommentClickHandler);
@@ -627,7 +624,7 @@ function displayuserPosts(username)
                        </div>
 
                        <p id="upvotes"><small>views: ${data.views}</small></p> 
-                        <div id="votediv">
+                        <div id="voterdiv">
                             <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
                             <h1 id="scoreCounter">${data.votes}</h1>
                             <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
@@ -645,6 +642,8 @@ function displayuserPosts(username)
                         <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
                     
                     </div>      <br/>`);
+                    
+                
          
           $(".create_comment").off("click",createCommentClickHandler);
           $(".create_comment").on("click",createCommentClickHandler);

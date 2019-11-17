@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 body { font-family: 'Montserrat',sans-serif }
 
+.username:hover {
+  opacity: .20;
+ 
+}
+
 #upvote {
 	src:"../reddi.png";
 	height: 20px;
@@ -12,6 +17,11 @@ body { font-family: 'Montserrat',sans-serif }
   height: 100%;
   top:50%;
   position: relative;
+}
+
+#voterdiv {
+  float: left;
+  height: 10%;
 }
 
 #descdiv{
@@ -38,6 +48,7 @@ body { font-family: 'Montserrat',sans-serif }
 {
   color: white;
 }
+
 
 #post_div {
   margin: auto;
@@ -418,7 +429,7 @@ input[type="submit"]:active {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   line-height: 40px;
   text-align: center;
-}
+} 
 
 .right {
   position: absolute;
