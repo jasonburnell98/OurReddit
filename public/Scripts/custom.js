@@ -516,7 +516,7 @@ function displayuserPosts(username)
                     <div id="titlediv">
                     <h1 >${data.title}</h1></div>
                     <small>created:   ${data.date}</small>
-                    <a data-username=${data.username} class = "username">by: ${data.username}</p>
+                    <a data-username=${data.username} class = "username">by: ${data.username}</a>
                        <div class ="deletediv"> 
                             <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
                        </div>
