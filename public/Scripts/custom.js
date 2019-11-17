@@ -477,13 +477,13 @@ function displayuserPosts(username)
                 $("#commentList").append(`
                 <div id=${id}>
                 
-                <div id="commentDiv" class="showcomment" data-commentid=${id}>
+                <div id="commentDiv">
                 
                 <div class="gradient-border" id="box">
                 <span class="commentclose" title="commentclose">&times;</span>
-                    <div id="commentdate">
+                    <div id="commentdate" >
                     <p color="white">
-                    <small>
+                    <small  class="showcomment" data-commentid=${id}>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
                     <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
                     <h1 id="scoreCounter">#ofcommentvoteshere</h1>
@@ -491,7 +491,7 @@ function displayuserPosts(username)
                 </div>
                     </div> <br>
                     <div id="descdiv">
-                    <p>${data.comment}</p> </div>
+                    <p >${data.comment}</p> </div>
                     </div>
                     </div>  
                     </div>
