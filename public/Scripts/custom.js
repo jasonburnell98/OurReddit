@@ -62,6 +62,18 @@ function create_comment(id)
   function add()
         {
 
+            var category;
+
+            // if(document.getElementById('other').checked)
+            //     category="other";
+            // else if(document.getElementById('sports').checked)
+            //     category="sports";
+            // else if(document.getElementById('news').checked)
+            //     category="news";
+            // else if(document.getElementById('media').checked)
+            //     category="media";
+
+        
             var title = $("#name").val();
             var content = $("#contents").val();
             var today = new Date();
@@ -92,14 +104,14 @@ function create_comment(id)
                        
                 
             db.collection("posts").add({
+                
                 username: data.username,
                 author:user.uid,
                 title: title,
                 name: content,
                 date: currdate,
                 votes:0,
-                views:0
-                                
+                views:0                 
             }) 
             
             .then(function(doc) {
@@ -182,13 +194,118 @@ function create_comment(id)
     function showUserPosts(evt)
     {
         var username = $(evt.currentTarget).attr("data-username");
-        displayuserPosts(username)
-       
+        displayuserPosts(username);
+    }
+
+    function getSports(evt)
+    {
+        displayCategory("sports");
+    }
+
+    function getNews(evt)
+    {
+        displayCategory("news");
+    }
+
+    function getMedia(evt)
+    {
+        displayCategory("media");
+    }
+
+    function deleteCommentHandler(evt)
+    {
+        var id = $(evt.currentTarget).attr("data-commentid");
+        var post = $(evt.currentTarget).attr("data-postid");
+        deleteComment(id,post);
     }
 
     $("#searchBar").off("click",searchHandler);
     $("#searchBar").on("click",searchHandler);
+    $("#sports").off("click",getSports);
+    $("#sports").on("click",getSports);
+    $("#media").off("click",getMedia);
+    $("#media").on("click",getMedia);
+    $("#news").off("click",getNews);
+    $("#news").on("click",getNews);
     
+    function deleteComment(id,post)
+    {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user){
+
+               const users = db.collection('users').doc(user.uid);
+              
+                users.get().then(doc => {
+
+                    var data = doc.data();
+                    uid= data.uid;     
+                    const comment = db.collection(post).doc(id);
+            
+             //THIS IS HOW YOU ACCESS EACH POST               
+                comment.get().then(doc => {
+                 //console.log(doc.data());
+                    data = doc.data();
+                    author = data.author;
+                    console.log('author is:'+author+", uid is+"+uid);
+
+                    if(author == uid)
+                    {
+                        db.collection(post).doc(id).delete().then(function() {
+                            console.log("Document successfully deleted!");
+                        }).catch(function(error) {
+                            console.error("Error removing document: ", error);
+                        });
+                    }
+                    else{
+                        alert("permission denied");
+                    }
+                })
+            })
+        }
+        })
+    }
+
+
+    function displayCategory(arg)
+    {
+        console.log("arg is: "+arg);
+        $("#commentList").html('');
+        db.collection("posts").where("category", "==","other")
+        .get()
+        .then(function(querySnapshot) {
+            //$("#theposts").html('');
+            $("#mainscreen").html('');
+            querySnapshot.forEach(function(doc) {
+                        var data = doc.data();
+                        var id = doc.id;
+                        console.log(data.votes);
+                        console.log(id);                
+                        $("#mainscreen").append(`
+                        <li>
+        
+                        <div id="post_div" data-postid=${id} class="showpost">
+                        
+                            <div id="titlediv">
+                            <small>created:   ${data.date}</small>
+                                <h3 >${data.title}</h3></div>
+                                <p id = "upvotes">votes: ${data.votes}</p>
+                            
+                            <br>
+                            <a class="showpost" data-postid=${id}>${data.name}</a>
+                            </li> 
+        
+                        </div>      <br/>`);
+                    });
+        
+                    $(".showpost").off("click",clickHandler);
+                    $(".showpost").on("click",clickHandler);    
+                })
+                .catch(function(error) {
+                    console.log("Error getting documents: ", error);
+                });
+  
+    
+    }
    
    
     function upvote(id)
@@ -307,8 +424,7 @@ function displayuserPosts(username)
                 var data = doc.data();
                 var id = doc.id;
                 var uid=data.author;
-                console.log(data.upvotes);
-                console.log(id);        
+                      
                
                 firebase.auth().onAuthStateChanged((user) => {
                     if(!user){
@@ -464,6 +580,7 @@ function displayuserPosts(username)
 
     function displayComments(collectionId)
     {
+        console.log("postId:"+collectionId);
         db.collection(collectionId).get().then(function(querySnapshot) {
             $("#commentList").html('');
             querySnapshot.forEach(function(doc) {
@@ -480,7 +597,7 @@ function displayuserPosts(username)
                 <div id="commentDiv">
                 
                 <div class="gradient-border" id="box">
-                <span class="commentclose" title="commentclose">&times;</span>
+                <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
                     <div id="commentdate" >
                     <p color="white">
                     <small  class="showcomment" data-commentid=${id}>
@@ -501,6 +618,9 @@ function displayuserPosts(username)
             });
             $(".showcomment").off("click",commentclickHandler);
             $(".showcomment").on("click",commentclickHandler);
+            $(".commentclose").off("click",deleteCommentHandler);
+            $(".commentclose").on("click",deleteCommentHandler);
+
         });
         
     }
@@ -555,7 +675,7 @@ function displayuserPosts(username)
             var data = doc.data();
             var id = doc.id;
             var uid=data.author;
-            console.log(id);
+            console.log("post id:"+id);
             var viewcnt= data.views;
             viewcnt++;
             db.collection('posts').doc(postid).update({
@@ -738,7 +858,6 @@ function displayuserPosts(username)
         
         let x = firebase.database().ref(postid);
         console.log(postid);
-        alert(postid);
         const post = db.collection(postid).doc('72usrU8WWZNGRuPsjxhP');
         var name;   
         

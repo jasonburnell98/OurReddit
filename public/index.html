@@ -71,10 +71,9 @@
                 
                  <input type="text" placeholder="Filter" id="myInput" onkeyup="filterFunction()">
                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="media.html">Media</a>
-                    <a class="dropdown-item" href="sports.html">Sports</a>
-                
-                <a class="dropdown-item" href="news">News</a>
+                    <a class="dropdown-item" id = "media">Media</a>
+                    <a class="dropdown-item" id="sports">Sports</a>
+                    <a class="dropdown-item" id="news">News</a>
               </div>
              </li>
       &nbsp; &nbsp; &nbsp; 
@@ -181,16 +180,22 @@
             <h1>Create a Post</h1></div>
               <p>Choose a category:</p>
 
-                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <label class="btn btn-secondary active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked>Sports
-                  </label>
-                  <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off">Media
-                  </label>
-                  <label class="btn btn-secondary">
-                    <input type="radio" name="options" id="option3" autocomplete="off">News
-                  </label>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                      <input type="radio" name="options" id="other" >Other
+                    </label>
+
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="media" >Media
+                    </label>
+
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="news" >News
+                    </label>
+
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="sports" >sports
+                    </label>
                 </div>
              
                 <br>
@@ -205,8 +210,6 @@
           </div>
       </div>
     </div>
-
-
 
 
         <br>
