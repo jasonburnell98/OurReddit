@@ -305,9 +305,9 @@ function displayuserPosts(username)
                     if(!user){
 
                         $("#theposts").append(`
-                        <div id="post_div" data-postid=${id} class="showpost"">
+                        <div id="post_div">
                         <div id="titlediv">
-                        <h1 >${data.title}</h1></div>
+                        <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
                         <small>created:   ${data.date}</small>
                         <a data-username=${data.username} class = "username">by: ${data.username}</a>
                         
@@ -320,7 +320,6 @@ function displayuserPosts(username)
                             </div>
                             </div>
         
-                            </div></div>
                          <br/>`);
                         
                      
