@@ -1,9 +1,11 @@
+
 var createComment=0;
 var post_flag=0;
 var uid;
 var selectedFile;
 
-const auth = firebase.auth();   
+const auth = firebase.auth(); 
+  
 
 function create_comment(id)
 {
@@ -401,6 +403,13 @@ function displayuserPosts(username)
                        
                             </div></div>
                                    <br/>`);
+
+                                   $("#file").on("change",function(event){
+                                    selectedFile = event.target.files[0];
+                                    $("#uploadButton").show();
+                                });
+
+
               $(".showpost").off("click",clickHandler);
               $(".showpost").on("click",clickHandler);
               $(".create_comment").off("click",createCommentClickHandler);
@@ -475,7 +484,11 @@ function displayuserPosts(username)
                     <div id="commentdate">
                     <p color="white">
                     <small>
-                    date created: ${data.date}</p> </small>
+                    date created: ${data.date}</p> </small>  <div id="voterdiv">
+                    <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <h1 id="scoreCounter">#ofcommentvoteshere</h1>
+                    <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
+                </div>
                     </div> <br>
                     <div id="descdiv">
                     <p>${data.comment}</p> </div>
@@ -654,7 +667,11 @@ function displayuserPosts(username)
                     
                     </div>      <br/>`);
                     
-                
+                    
+                    $("#file").on("change",function(event){
+                        selectedFile = event.target.files[0];
+                        $("#uploadButton").show();
+                    });
          
           $(".create_comment").off("click",createCommentClickHandler);
           $(".create_comment").on("click",createCommentClickHandler);
@@ -757,3 +774,6 @@ function displayuserPosts(username)
     
    
   
+
+
+
