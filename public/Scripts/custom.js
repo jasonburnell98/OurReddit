@@ -199,7 +199,7 @@ function create_comment(id)
 
 function displayuserPosts(username)
 {
-    
+    $("#commentList").html('');
     db.collection("posts").where("username", "==",username)
     .get()
     .then(function(querySnapshot) {
@@ -504,15 +504,90 @@ function displayuserPosts(username)
             
             var data = doc.data();
             var id = doc.id;
+            var uid=data.author;
             console.log(id);
             var viewcnt= data.views;
             viewcnt++;
             db.collection('posts').doc(postid).update({
                 views: viewcnt
-            })             
+            })      
+            firebase.auth().onAuthStateChanged((user) => {
+                if(!user){
 
-            $("#mainscreen").html(`
-            <div id="post_div" data-postid=${id}>
+                    $("#mainscreen").html(`
+                    <div id="post_div">
+                    <div id="titlediv">
+                    <h1 >${data.title}</h1></div>
+                    <small>created:   ${data.date}</small>
+                    <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                    
+                       <p id="upvotes"><small>views: ${data.views}</small></p> 
+                            <h1 id="scoreCounter">${data.votes}</h1>
+                            
+                        <br/>
+                        <div id="descdiv">
+                            <p id="description"align ="center">${data.name}</p>     
+                        </div>
+                        </div>
+    
+                        </div></div>
+                            <div id = "commentbtn">
+                            <input type="text" id = "commentInput" placeholder="enter comment"></input>
+                        <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+                    
+                    </div>      <br/>`);
+                    
+                 
+                    $(".username").off("click",showUserPosts);
+                    $(".username").on("click",showUserPosts);
+               }
+
+               else if(user.uid !=uid){
+                 
+
+                $("#mainscreen").html(`
+                <div id="post_div">
+                <div id="titlediv">
+                <h1 >${data.title}</h1></div>
+                <small>created:   ${data.date}</small>
+                <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                  
+
+                   <p id="upvotes"><small>views: ${data.views}</small></p> 
+                    <div id="votediv">
+                        <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                        <h1 id="scoreCounter">${data.votes}</h1>
+                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                    </div>
+                    <br/>
+                    <div id="descdiv">
+                        <p id="description"align ="center">${data.name}</p>     
+                    </div>
+                    </div>
+
+                    </div></div>
+                        <div id = "commentbtn">
+                        <input type="text" id = "commentInput" placeholder="enter comment"></input>
+                    <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+                
+                </div>      <br/>`);
+                
+                $(".create_comment").off("click",createCommentClickHandler);
+                $(".create_comment").on("click",createCommentClickHandler);
+                $(".downvote").off("click",downvoteHandler);
+                $(".downvote").on("click",downvoteHandler);
+                $(".upvote").off("click",upvoteHandler);
+                $(".upvote").on("click",upvoteHandler);
+                $(".username").off("click",showUserPosts);
+                $(".username").on("click",showUserPosts);
+                
+               }
+
+               else if(user.uid == uid)
+               {
+                   alert("we in");
+                $("#mainscreen").html(`
+                    <div id="post_div">
                     <div id="titlediv">
                     <h1 >${data.title}</h1></div>
                     <small>created:   ${data.date}</small>
@@ -531,14 +606,14 @@ function displayuserPosts(username)
                         <div id="descdiv">
                             <p id="description"align ="center">${data.name}</p>     
                         </div>
-
+                        </div>
                             
                    
-             </div>
+             </div></div>
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>
             <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
-            </div>
+          
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
@@ -549,17 +624,56 @@ function displayuserPosts(username)
           $(".upvote").on("click",upvoteHandler);
           $(".username").off("click",showUserPosts);
           $(".username").on("click",showUserPosts);
+          $("#deletepost").off("click",deleteHandler);
+          $("#deletepost").on("click",deleteHandler);
+           }
+
+   });
+   
+})
+            
+
+        //     $("#mainscreen").html(`
+        //     <div id="post_div">
+        //             <div id="titlediv">
+        //             <h1 >${data.title}</h1></div>
+        //             <small>created:   ${data.date}</small>
+        //             <a data-username=${data.username} class = "username">by: ${data.username}</a>
+        //                <div class ="deletediv"> 
+        //                     <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
+        //                </div>
+
+        //                <p id="upvotes"><small>views: ${data.views}</small></p> 
+        //                 <div id="votediv">
+        //                     <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+        //                     <h1 id="scoreCounter">${data.votes}</h1>
+        //                     <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+        //                 </div>
+        //                 <br/>
+        //                 <div id="descdiv">
+        //                     <p id="description"align ="center">${data.name}</p>     
+        //                 </div>
+        //                 </div>
+                            
+                   
+        //      </div></div>
+        //          <div id = "commentbtn">
+        //         <input type="text" id = "commentInput" placeholder="enter comment"></input>
+        //     <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+          
+        //   </div>      <br/>`);
+         
+        //   $(".create_comment").off("click",createCommentClickHandler);
+        //   $(".create_comment").on("click",createCommentClickHandler);
+        //   $(".downvote").off("click",downvoteHandler);
+        //   $(".downvote").on("click",downvoteHandler);
+        //   $(".upvote").off("click",upvoteHandler);
+        //   $(".upvote").on("click",upvoteHandler);
+        //   $(".username").off("click",showUserPosts);
+        //   $(".username").on("click",showUserPosts);
 
         getComments(postid);
 
-
-        db.collection(postid).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                var data = doc.data();
-                var id = doc.id;
-                console.log(id);            
-            })})
-    })
 }
 
     function displaySinglecomment(postid){
