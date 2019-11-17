@@ -475,7 +475,11 @@ function displayuserPosts(username)
                     <div id="commentdate">
                     <p color="white">
                     <small>
-                    date created: ${data.date}</p> </small>
+                    date created: ${data.date}</p> </small>  <div id="voterdiv">
+                    <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <h1 id="scoreCounter">${data.votes}</h1>
+                    <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
+                </div>
                     </div> <br>
                     <div id="descdiv">
                     <p>${data.comment}</p> </div>
