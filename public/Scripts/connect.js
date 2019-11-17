@@ -11,9 +11,7 @@ var firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
-  //STORAGE FOR IMAGES
-  const storageService = firebase.storage();
-  const storageRef = storageService.ref();
+
  
   //firebase.database().ref("hi").set("there");
 

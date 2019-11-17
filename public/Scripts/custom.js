@@ -281,6 +281,7 @@ function displayuserPosts(username)
         });
             })
         })
+        document.location.reload(true);
     }
 
     //every time a change is made, a new post is added as an li
