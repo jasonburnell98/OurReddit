@@ -199,7 +199,7 @@ function create_comment(id)
 
 function displayuserPosts(username)
 {
-    
+    $("#commentList").html('');
     db.collection("posts").where("username", "==",username)
     .get()
     .then(function(querySnapshot) {
@@ -512,11 +512,11 @@ function displayuserPosts(username)
             })             
 
             $("#mainscreen").html(`
-            <div id="post_div" data-postid=${id}>
+            <div id="post_div">
                     <div id="titlediv">
                     <h1 >${data.title}</h1></div>
                     <small>created:   ${data.date}</small>
-                    <a data-username=${data.username} class = "username">by: ${data.username}</p>
+                    <a data-username=${data.username} class = "username">by: ${data.username}</a>
                        <div class ="deletediv"> 
                             <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
                        </div>
@@ -531,14 +531,14 @@ function displayuserPosts(username)
                         <div id="descdiv">
                             <p id="description"align ="center">${data.name}</p>     
                         </div>
-
+                        </div>
                             
                    
-             </div>
+             </div></div>
                  <div id = "commentbtn">
                 <input type="text" id = "commentInput" placeholder="enter comment"></input>
             <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
-            </div>
+          
           </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
