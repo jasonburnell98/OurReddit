@@ -174,11 +174,12 @@ function create_comment(id)
     }
 
     let searchHandler= function(evt)
-    {
+    {   
         var content= $("#mainsearch").val();
         console.log(content);
         displaySearchResults(content);
     }
+    
 
     $("#searchBar").off("click",searchHandler);
     $("#searchBar").on("click",searchHandler);

@@ -19,6 +19,7 @@ body { font-family: 'Montserrat',sans-serif }
   margin: auto;
   width: 90%;
   padding: 10px;
+  padding-top:5%;
 }
 #upvoteButton {
  
@@ -78,7 +79,7 @@ body { font-family: 'Montserrat',sans-serif }
 .showpost {
   margin: auto;
   color: white;
-  width: 60%;
+  width: 75%;
   height: 100%;
   box-shadow: 0px 0px 25px #27262575;
   border-radius: 3px;
@@ -165,7 +166,7 @@ text-align: left;
 
 #box {
   display: flex;
-
+  min-height: 20vh;
   width: 95%;
   height: relative;
   color: white;
