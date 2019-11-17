@@ -270,6 +270,7 @@ function displayuserPosts(username)
         }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
+        
 
         db.collection(postid).get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
@@ -281,6 +282,7 @@ function displayuserPosts(username)
         });
             })
         })
+        document.location.reload(true);
     }
 
     //every time a change is made, a new post is added as an li
@@ -297,82 +299,116 @@ function displayuserPosts(username)
                 console.log(id);        
                
                 firebase.auth().onAuthStateChanged((user) => {
-                     if(!user){
+                    if(!user){
 
                         $("#theposts").append(`
-                       
-                        <div id="post_div" data-postid=${id} class="showpost">
-                                            
-                            <div id="titlediv">
-                            <h1> created by: ${data.username}</h1>
-                            <small>created:   ${data.date}</small>
-                      
-                            <h1 >${data.title}</h1></div>
-                            <p id="upvotes">votes: ${data.votes}</p>
-                            
-                            <br>
-                            
-                            <p id="description">${data.name}</p>
-                        </div>
-
-                        </div>      <br/>`);
-
+                        <div id="post_div" data-postid=${id} class="showpost"">
+                        <div id="titlediv">
+                        <h1 >${data.title}</h1></div>
+                        <small>created:   ${data.date}</small>
+                        <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                        
+                           <p id="upvotes"><small>views: ${data.views}</small></p> 
+                                <h1 id="scoreCounter">${data.votes}</h1>
+                                
+                            <br/>
+                            <div id="descdiv">
+                                <p id="description"align ="center">${data.name}</p>     
+                            </div>
+                            </div>
+        
+                            </div></div>
+                         <br/>`);
+                        
+                     
+                        $(".username").off("click",showUserPosts);
+                        $(".username").on("click",showUserPosts);
                         $(".showpost").off("click",clickHandler);
                         $(".showpost").on("click",clickHandler);
-                    }
-
-                    else if(user.uid !=uid){
+                   }
+    
+                   //if there is a user logged in but not the same user that created the post 
+                   //then he can not delete the post
+                   else if(user.uid !=uid){
+                    $("#theposts").append(`
+                    <div id="post_div" data-postid=${id} class="showpost">
+                    <div id="titlediv">
+                    <h1 >${data.title}</h1></div>
+                    <small>created:   ${data.date}</small>
+                    <a data-username=${data.username} class = "username">by: ${data.username}</a>
                       
-
-                        $("#theposts").append(`
-                        <div>
-
-                        <div id="post_div" data-postid=${id} class="showpost">
-                        
-                            <div id="titlediv">
-                            <small>created:   ${data.date}</small>
-            
-                            <h1 >${data.title}</h1></div>
-                            <p id="upvotes">votes: ${data.votes}</p>
-                            
-                            <br>
-                            <a class="showpost" data-postid=${id}>${data.name}</a>
+    
+                       <p id="upvotes"><small>views: ${data.views}</small></p> 
+                        <div id="votediv">
+                            <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                            <h1 id="scoreCounter">${data.votes}</h1>
+                            <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
-
-                        </div>      <br/>`);
-
-                        $(".showpost").off("click",clickHandler);
-                        $(".showpost").on("click",clickHandler);
-                    }
-
-                    else if(user.uid == uid)
-                    {
-                        console.log("postid: "+uid);
-                        console.log("uid:"+user.uid);
-                            
-                        $("#theposts").append(`
-                        <div>
-
-                        <div id="post_div" data-postid=${id} class="showpost">
-                        
-                            <div id="titlediv">
-                            <small>created:   ${data.date}</small>
-                            <div class ="deletediv"> <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button></div>
-                                <h1 >${data.title}</h1></div>
-                                <p id="upvotes">votes: ${data.votes}</p>
-                            
-                            <br>
-                            <a class="showpost" data-postid=${id}>${data.name}</a>
+                        <br/>
+                        <div id="descdiv">
+                            <p id="description"align ="center">${data.name}</p>     
                         </div>
-
-                        </div>      <br/>`);
-
+                        </div>
+    
+                        </div></div>
+                          <br/>`);
+                    
+                    $(".downvote").off("click",downvoteHandler);
+                    $(".downvote").on("click",downvoteHandler);
+                    $(".upvote").off("click",upvoteHandler);
+                    $(".upvote").on("click",upvoteHandler);
+                    $(".username").off("click",showUserPosts);
+                    $(".username").on("click",showUserPosts);
                     $(".showpost").off("click",clickHandler);
                     $(".showpost").on("click",clickHandler);
-
-                    $(".delete").off("click",deleteHandler);
-                    $(".delete").on("click",deleteHandler);
-                    }
+                    
+                   }
+    
+                   //if the user made the post then he is allowed to delete it
+                   else if(user.uid == uid)
+                   {
+                    $("#theposts").append(`
+                        <div id="post_div" data-postid=${id} class="showpost">
+                        <div id="titlediv">
+                        <h1 >${data.title}</h1></div>
+                        <small>created:   ${data.date}</small>
+                        <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                           <div class ="deletediv"> 
+                                <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
+                           </div>
+    
+                           <p id="upvotes"><small>views: ${data.views}</small></p> 
+                            <div id="votediv">
+                                <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                                <h1 id="scoreCounter">${data.votes}</h1>
+                                <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                            </div>
+                            <br/>
+                            <div id="descdiv">
+                                <p id="description"align ="center">${data.name}</p>     
+                            </div>
+                            </div>
+                                
+                       
+                            </div></div>
+                                <div id = "commentbtn">
+                                <input type="text" id = "commentInput" placeholder="enter comment"></input>
+                            <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+                        
+                        </div>      <br/>`);
+              $(".showpost").off("click",clickHandler);
+              $(".showpost").on("click",clickHandler);
+              $(".create_comment").off("click",createCommentClickHandler);
+              $(".create_comment").on("click",createCommentClickHandler);
+              $(".downvote").off("click",downvoteHandler);
+              $(".downvote").on("click",downvoteHandler);
+              $(".upvote").off("click",upvoteHandler);
+              $(".upvote").on("click",upvoteHandler);
+              $(".username").off("click",showUserPosts);
+              $(".username").on("click",showUserPosts);
+              $("#deletepost").off("click",deleteHandler);
+              $("#deletepost").on("click",deleteHandler);
+               }
                 })
 
         });
@@ -443,7 +479,6 @@ function displayuserPosts(username)
                 <br/>`);
                
             });
-
             $(".showcomment").off("click",commentclickHandler);
             $(".showcomment").on("click",commentclickHandler);
         });
@@ -468,7 +503,6 @@ function displayuserPosts(username)
                     
                         <div id="titlediv">
                         <small>created:   ${data.date}</small>
-                           <div class ="deletediv"> <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
                             <h3 >${data.title}</h3></div>
                             <p id = "upvotes">votes: ${data.votes}</p>
                         
@@ -481,10 +515,6 @@ function displayuserPosts(username)
     
                 $(".showpost").off("click",clickHandler);
                 $(".showpost").on("click",clickHandler);
-    
-                $(".delete").off("click",deleteHandler);
-                $(".delete").on("click",deleteHandler);
-    
             })
             .catch(function(error) {
                 console.log("Error getting documents: ", error);
@@ -542,9 +572,9 @@ function displayuserPosts(username)
                     $(".username").on("click",showUserPosts);
                }
 
+               //if there is a user logged in but not the same user that created the post 
+               //then he can not delete the post
                else if(user.uid !=uid){
-                 
-
                 $("#mainscreen").html(`
                 <div id="post_div">
                 <div id="titlediv">
@@ -583,9 +613,9 @@ function displayuserPosts(username)
                 
                }
 
+               //if the user made the post then he is allowed to delete it
                else if(user.uid == uid)
                {
-                   alert("we in");
                 $("#mainscreen").html(`
                     <div id="post_div">
                     <div id="titlediv">
@@ -609,12 +639,12 @@ function displayuserPosts(username)
                         </div>
                             
                    
-             </div></div>
-                 <div id = "commentbtn">
-                <input type="text" id = "commentInput" placeholder="enter comment"></input>
-            <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
-          
-          </div>      <br/>`);
+                        </div></div>
+                            <div id = "commentbtn">
+                            <input type="text" id = "commentInput" placeholder="enter comment"></input>
+                        <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+                    
+                    </div>      <br/>`);
          
           $(".create_comment").off("click",createCommentClickHandler);
           $(".create_comment").on("click",createCommentClickHandler);
