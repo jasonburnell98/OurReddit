@@ -1,9 +1,11 @@
+
 var createComment=0;
 var post_flag=0;
 var uid;
 var selectedFile;
 
-const auth = firebase.auth();   
+const auth = firebase.auth(); 
+  
 
 function create_comment(id)
 {
@@ -370,8 +372,10 @@ function displayuserPosts(username)
                    {
                     $("#theposts").append(`
                         <div id="post_div" data-postid=${id} class="showpost">
+                        
                         <div id="titlediv">
                         <h1 >${data.title}</h1></div>
+                        
                         <small>created:   ${data.date}</small>
                         <a data-username=${data.username} class = "username">by: ${data.username}</a>
                            <div class ="deletediv"> 
@@ -393,6 +397,13 @@ function displayuserPosts(username)
                        
                             </div></div>
                                    <br/>`);
+
+                                   $("#file").on("change",function(event){
+                                    selectedFile = event.target.files[0];
+                                    $("#uploadButton").show();
+                                });
+
+
               $(".showpost").off("click",clickHandler);
               $(".showpost").on("click",clickHandler);
               $(".create_comment").off("click",createCommentClickHandler);
@@ -643,7 +654,11 @@ function displayuserPosts(username)
                     
                     </div>      <br/>`);
                     
-                
+                    
+                    $("#file").on("change",function(event){
+                        selectedFile = event.target.files[0];
+                        $("#uploadButton").show();
+                    });
          
           $(".create_comment").off("click",createCommentClickHandler);
           $(".create_comment").on("click",createCommentClickHandler);
@@ -742,3 +757,41 @@ function displayuserPosts(username)
     
    
   
+     function uploadFile(){
+// Create a root reference
+var filename = selectedFile.name;
+// Create a root reference
+var storageRef = firebase.storage().ref('/images/'+filename);
+
+var uploadTask = storageRef.put(selectedFile);
+
+// Register three observers:
+// 1. 'state_changed' observer, called any time the state changes
+// 2. Error observer, called on failure
+// 3. Completion observer, called on successful completion
+uploadTask.on('state_changed', function(snapshot){
+    // Observe state change events such as progress, pause, and resume
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case firebase.storage.TaskState.PAUSED: // or 'paused'
+        console.log('Upload is paused');
+        break;
+      case firebase.storage.TaskState.RUNNING: // or 'running'
+        console.log('Upload is running');
+        break;
+    }
+  }, function(error) {
+    // Handle unsuccessful uploads
+  }, function() {
+    // Handle successful uploads on complete
+    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+      console.log('File available at', downloadURL);
+    });
+  });
+
+     }
+
+
