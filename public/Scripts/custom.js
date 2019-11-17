@@ -8,10 +8,10 @@ const auth = firebase.auth();
 function create_comment(id)
 {
     firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
+        if (user){
               // User logged in already or has just logged in.
             console.log("uid " +user.uid);
-
+            alert("comment id is: "+id);
             var content= $("#commentInput").val();
             console.log(id);
             console.log("creating comment");
@@ -19,8 +19,15 @@ function create_comment(id)
             var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
             currdate= currdate +", "+time;
+            
+            const users = db.collection('users').doc(user.uid);
+                  
+            users.get().then(doc => {
+                console.log(doc.data());
+                var data = doc.data();
 
             db.collection(id).add({
+                username:data.username,
                 author: user.uid,
                 linkedto:id,
                 comment:content,
@@ -39,11 +46,13 @@ function create_comment(id)
                 console.error("Error adding document: ", error);
             });
 
+            })
         }
 
         else{
             alert("please log in to create a comment");
         }
+   
     })
 }
 
@@ -331,9 +340,9 @@ function displayuserPosts(username)
                    //then he can not delete the post
                    else if(user.uid !=uid){
                     $("#theposts").append(`
-                    <div id="post_div" data-postid=${id} class="showpost">
-                    <div id="titlediv">
-                    <h1 >${data.title}</h1></div>
+                    <div id="post_div">
+                        <div id="titlediv">
+                        <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
                     <small>created:   ${data.date}</small>
                     <a data-username=${data.username} class = "username">by: ${data.username}</a>
                       
@@ -368,11 +377,11 @@ function displayuserPosts(username)
                    else if(user.uid == uid)
                    {
                     $("#theposts").append(`
-                        <div id="post_div" data-postid=${id} class="showpost">
-                        <div id="titlediv">
-                        <h1 >${data.title}</h1></div>
-                        <small>created:   ${data.date}</small>
-                        <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                    <div id="post_div">
+                    <div id="titlediv">
+                    <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
+                        <small>created:   ${data.date}
+                        <a data-username=${data.username} class = "username">by: ${data.username}</a></small>
                            <div class ="deletediv"> 
                                 <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
                            </div>
@@ -452,8 +461,10 @@ function displayuserPosts(username)
                 // doc.data() is never undefined for query doc snapshots
                 var data = doc.data();
                 var id = doc.id;
-                console.log(data.comment);
-                console.log(id);                
+                
+                console.log("comment: "+data.comment);
+                console.log("comment id: "+id);     
+                           
                 $("#commentList").append(`
                 <div id=${id}>
                 
@@ -568,6 +579,7 @@ function displayuserPosts(username)
                     $(".username").on("click",showUserPosts);
                }
 
+               
                //if there is a user logged in but not the same user that created the post 
                //then he can not delete the post
                else if(user.uid !=uid){
@@ -705,11 +717,14 @@ function displayuserPosts(username)
 }
 
     function displaySinglecomment(postid){
-        // let x = firebase.database().ref(postid);
         
+        
+        let x = firebase.database().ref(postid);
         console.log(postid);
-        const post = db.collection(postid);
+        alert(postid);
+        const post = db.collection(postid).doc('72usrU8WWZNGRuPsjxhP');
         var name;   
+        
              //THIS IS HOW YOU ACCESS EACH POST               
         post.get().then(doc => {
 
@@ -717,7 +732,7 @@ function displayuserPosts(username)
             var id = doc.id;
         console.log(postid);
         $("#commentList").append(`
-         <div id="post_div">
+         <div>
          <h1 align ="center">${postid}</h1> 
          <ul id="users"> </ul>
          </div>
@@ -729,14 +744,15 @@ function displayuserPosts(username)
         
         })
         getComments(postid);
-         //create_comment(postid);
+    
+         create_comment(postid);
  
-        //  db.collection(postid).get().then(function(querySnapshot) {
-        //      querySnapshot.forEach(function(doc) {
-        //          var data = doc.data();
-        //          var id = doc.id;
-        //          console.log(id);            
-        //      })})
+         db.collection(postid).get().then(function(querySnapshot) {
+             querySnapshot.forEach(function(doc) {
+                 var data = doc.data();
+                 var id = doc.id;
+                 console.log(id);            
+             })})
      }
     
    
