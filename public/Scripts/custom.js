@@ -46,7 +46,6 @@ function create_comment(id)
     })
 }
 
-
     //function that creates a post
   function add()
         {
@@ -67,35 +66,21 @@ function create_comment(id)
                     
                     var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
                     
-                    var username;
+                    var userName;
                     var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
                     currdate= currdate +", "+time;
                    
-                    db.collection("users").where("uid", "==", user.uid)
-                        .get()
-                        .then(function(querySnapshot) {
-                            querySnapshot.forEach(function(doc) {
-                                // doc.data() is never undefined for query doc snapshots
-                                alert(doc.id, " => ", doc.data());
-                            });
-                        })
-                        .catch(function(error) {
-                            console.log("Error getting documents: ", error);
-                        });
-
-                   //const users = db.collection('users').doc(user.uid);
-                    //THIS IS HOW YOU ACCESS EACH POST               
-                    // users.get().then(doc => {
-                    //     //console.log(doc.data());
-                    //     var data = doc.data();
-                    //     // alert(doc);
-                    //     //username = data.username;
                 
-                    // });
 
+                   const users = db.collection('users').doc(user.uid);
+                  
+                    users.get().then(doc => {
+                        console.log(doc.data());
+                        var data = doc.data();
+                       
                 
             db.collection("posts").add({
-                username: 1,
+                username: data.username,
                 author:user.uid,
                 title: title,
                 name: content,
@@ -113,7 +98,8 @@ function create_comment(id)
             .catch(function(error) {
                 console.error("Error adding document: ", error);
             })
-        }
+        })
+    }
 
      else {
          alert("please log in before making a post")
@@ -181,6 +167,13 @@ function create_comment(id)
     }
     
 
+    function showUserPosts(evt)
+    {
+        var username = $(evt.currentTarget).attr("data-username");
+        displayuserPosts(username)
+       
+    }
+
     $("#searchBar").off("click",searchHandler);
     $("#searchBar").on("click",searchHandler);
     
@@ -202,6 +195,51 @@ function create_comment(id)
             })
     
 })
+}
+
+function displayuserPosts(username)
+{
+    
+    db.collection("posts").where("username", "==",username)
+    .get()
+    .then(function(querySnapshot) {
+        //$("#theposts").html('');
+        $("#mainscreen").html('');
+        querySnapshot.forEach(function(doc) {
+                    var data = doc.data();
+                    var id = doc.id;
+                    console.log(data.votes);
+                    console.log(id);                
+                    $("#mainscreen").append(`
+                    <li>
+    
+                    <div id="post_div" data-postid=${id} class="showpost">
+                    
+                        <div id="titlediv">
+                        <small>created:   ${data.date}</small>
+                           <div class ="deletediv"> <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
+                            <h3 >${data.title}</h3></div>
+                            <p id = "upvotes">votes: ${data.votes}</p>
+                        
+                        <br>
+                        <a class="showpost" data-postid=${id}>${data.name}</a>
+                        </li> 
+    
+                    </div>      <br/>`);
+                });
+    
+                $(".showpost").off("click",clickHandler);
+                $(".showpost").on("click",clickHandler);
+    
+                $(".delete").off("click",deleteHandler);
+                $(".delete").on("click",deleteHandler);
+    
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+  
+    
 }
 
     function downvote(id)
@@ -478,6 +516,7 @@ function create_comment(id)
                     <div id="titlediv">
                     <h1 >${data.title}</h1></div>
                     <small>created:   ${data.date}</small>
+                    <a data-username=${data.username} class = "username">by: ${data.username}</p>
                        <div class ="deletediv"> 
                             <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
                        </div>
@@ -508,6 +547,9 @@ function create_comment(id)
           $(".downvote").on("click",downvoteHandler);
           $(".upvote").off("click",upvoteHandler);
           $(".upvote").on("click",upvoteHandler);
+          $(".username").off("click",showUserPosts);
+          $(".username").on("click",showUserPosts);
+
         getComments(postid);
 
 

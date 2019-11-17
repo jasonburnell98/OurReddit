@@ -37,22 +37,19 @@ signupForm.addEventListener('submit', (e) => {
       if (cred) {
         
         console.log(cred.uid);
-
-        db.collection("users").add({
+        db.collection("users").doc(cred.uid).set({
           username: username,
           emailaddress:email,
           uid:cred.uid
       })
-
-      .then(function(doc) {
-        console.log("Document written with ID: ", doc.data);
-        document.location.reload(true);
-        console.log("uid is: "+uid);
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
-
+      .then(function() {
+          console.log("Document successfully written!");
+          alert("user made with uid: "+cred.uid );
+      })
+      .catch(function(error) {
+          console.error("Error writing document: ", error);
+      });
+  
       }
      
     //document.location.reload(true);
