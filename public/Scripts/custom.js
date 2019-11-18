@@ -223,7 +223,7 @@ function create_comment(id)
     {
         var id = $(evt.currentTarget).attr("data-commentid");
         var post = $(evt.currentTarget).attr("data-postid");
-        upvoteomment(id,post)
+        upvoteComment(id,post);
     }
 
     function deleteCommentHandler(evt)
@@ -645,9 +645,9 @@ function displayuserPosts(username)
                     <p color="white">
                     <small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
-                    <button  class="upvote btn" id="upvoteButton" data-commentid=${id}data-postid=${collectionId}>&uarr;</button>
+                    <button  class="upvote btn" id="upvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&uarr;</button>
                     <h1 id="scoreCounter">${data.votes}</h1>
-                    <button  class="downvote btn" id="downvoteButton" data-commentid=${id} data-postid=${collectionId}>&darr;</button>
+                    <button  class="downvote btn" id="downvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&darr;</button>
                 </div>
                     </div> <br>
                     <div id="descdiv">
@@ -663,10 +663,10 @@ function displayuserPosts(username)
             $(".showcomment").on("click",commentclickHandler);
             $(".commentclose").off("click",deleteCommentHandler);
             $(".commentclose").on("click",deleteCommentHandler);
-            $("#upvoteButton").off("click",upvoteCommentHandler);
-            $("#upvoteButton").on("click",upvoteCommentHandler);
-            $("#downvoteButton").off("click",downvoteCommentHandler);
-            $("#downvoteButton").on("click",downvoteCommentHandler);
+            $("#upvoteCommentButton").off("click",upvoteCommentHandler);
+            $("#upvoteCommentButton").on("click",upvoteCommentHandler);
+            $("#downvoteCommentButton").off("click",downvoteCommentHandler);
+            $("#downvoteCommentButton").on("click",downvoteCommentHandler);
 
         
         });
@@ -933,7 +933,7 @@ function displayuserPosts(username)
                     <p >${data.comment}</p> </div>
                     </div>
                     </div>  
-                  
+                  <br/>
                     <div id = "commentbtn">
                     <input type="text" id = "commentInput" placeholder="enter comment"></input>
                 <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
@@ -944,7 +944,7 @@ function displayuserPosts(username)
          $(".create_comment").on("click",createCommentClickHandler);
         
         })
-        //getComments(commentid);
+        getComments(commentid);
 
 
      }
