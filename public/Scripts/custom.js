@@ -246,7 +246,7 @@ function create_comment(id)
                 users.get().then(doc => {
 
                     var data = doc.data();
-                    uid= data.uid;     
+                    uid= data.uid;    
                     const comment = db.collection(post).doc(id);
             
              //THIS IS HOW YOU ACCESS EACH POST               
@@ -265,7 +265,7 @@ function create_comment(id)
                         });
                     }
                     else{
-                        alert("permission denied");
+                        alert("woah there buddy, can't do that ):");
                     }
                 })
             })
