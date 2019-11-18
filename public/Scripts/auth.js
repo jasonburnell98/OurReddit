@@ -1,5 +1,10 @@
+function googleSigninEvent(evt)
+{
+  googleSignin();
+}
 
-
+   $("#google").off("click",googleSigninEvent);
+   $("#google").on("click",googleSigninEvent);
 
 // listen for auth status changes
   //call back function, takes in user as a parameter
