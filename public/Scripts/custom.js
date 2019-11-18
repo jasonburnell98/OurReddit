@@ -29,7 +29,7 @@ function create_comment(id)
                 var data = doc.data();
 
             db.collection(id).add({
-                username:data.username,
+                username:user.email,
                 author: user.uid,
                 linkedto:id,
                 comment:content,
@@ -104,12 +104,7 @@ function create_comment(id)
                        
                 
             db.collection("posts").add({
-<<<<<<< HEAD
                 username: user.email,
-=======
-                
-                username: data.username,
->>>>>>> 9b803c48b2584e7d936a7fbfe76147dbf4199b99
                 author:user.uid,
                 title: title,
                 name: content,
