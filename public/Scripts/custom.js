@@ -13,7 +13,7 @@ function create_comment(id)
         if (user){
               // User logged in already or has just logged in.
             console.log("uid " +user.uid);
-            alert("comment id is: "+id);
+            
             var content= $("#commentInput").val();
             console.log(id);
             console.log("creating comment");
@@ -156,8 +156,9 @@ function create_comment(id)
 
     //handles when comments get clicked
     let commentclickHandler = function(evt){
-        let postid = $(evt.currentTarget).attr("data-commentid");
-        displaySinglecomment(postid);   
+        let commentid = $(evt.currentTarget).attr("data-commentid");
+        let postid = $(evt.currentTarget).attr("data-postid");
+        displaySinglecomment(commentid,postid);   
     }
 
     let createCommentClickHandler = function(evt){
@@ -600,7 +601,7 @@ function displayuserPosts(username)
                 <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
                     <div id="commentdate" >
                     <p color="white">
-                    <small  class="showcomment" data-commentid=${id}>
+                    <small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
                     <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
                     <h1 id="scoreCounter">#ofcommentvoteshere</h1>
@@ -661,7 +662,6 @@ function displayuserPosts(username)
             });
   
     }
-
     
     //display a single post
     function displaySinglePost(postid){
@@ -671,7 +671,7 @@ function displayuserPosts(username)
         var name;   
              //THIS IS HOW YOU ACCESS EACH POST               
         post.get().then(doc => {
-            
+
             var data = doc.data();
             var id = doc.id;
             var uid=data.author;
@@ -853,12 +853,13 @@ function displayuserPosts(username)
 
 }
 
-    function displaySinglecomment(postid){
+    function displaySinglecomment(commentid,postid){
         
         
         let x = firebase.database().ref(postid);
+
         console.log(postid);
-        const post = db.collection(postid).doc('72usrU8WWZNGRuPsjxhP');
+        const post = db.collection(postid).doc(commentid);
         var name;   
         
              //THIS IS HOW YOU ACCESS EACH POST               
@@ -867,28 +868,38 @@ function displayuserPosts(username)
             data = doc.data();
             var id = doc.id;
         console.log(postid);
-        $("#commentList").append(`
-         <div>
-         <h1 align ="center">${postid}</h1> 
-         <ul id="users"> </ul>
-         </div>
-           <button id="comment" class= "create_comment" data-commentid=${id}> create comment</button>
-         </div>      <br/>`);
+        //$("#theposts").html('');
+        $("#mainscreen").html('');
+        $("#mainscreen").html(`
+        
+        <div id=${id}>
+                
+                <div id="commentDiv">
+                
+                <div class="gradient-border" id="box">
+                <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
+                    <div id="commentdate" >
+                    <p color="white">
+                    date created: ${data.date}</p> </small>  <div id="voterdiv">
+                    <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <h1 id="scoreCounter">${data.votes}</h1>
+                    <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
+                </div>
+                    </div> <br>
+                    <div id="descdiv">
+                    <p >${data.comment}</p> </div>
+                    </div>
+                    </div>  
+                    </div>
+<br/>`);
         
          $(".create_comment").off("click",createCommentClickHandler);
          $(".create_comment").on("click",createCommentClickHandler);
         
         })
-        getComments(postid);
-    
-         create_comment(postid);
- 
-         db.collection(postid).get().then(function(querySnapshot) {
-             querySnapshot.forEach(function(doc) {
-                 var data = doc.data();
-                 var id = doc.id;
-                 console.log(id);            
-             })})
+        getComments(commentid);
+
+
      }
     
    
