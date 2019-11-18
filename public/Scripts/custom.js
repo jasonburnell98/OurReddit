@@ -63,16 +63,10 @@ function create_comment(id)
         {
 
             var category;
-
-            // if(document.getElementById('other').checked)
-            //     category="other";
-            // else if(document.getElementById('sports').checked)
-            //     category="sports";
-            // else if(document.getElementById('news').checked)
-            //     category="news";
-            // else if(document.getElementById('media').checked)
-            //     category="media";
-
+            var e = document.getElementById("sel1");
+            var category = e.options[e.selectedIndex].value;
+            alert(category);
+    
         
             var title = $("#name").val();
             var content = $("#contents").val();
@@ -104,7 +98,7 @@ function create_comment(id)
                        
                 
             db.collection("posts").add({
-                
+                category:category,
                 username: user.email,
                 author:user.uid,
                 title: title,
@@ -316,7 +310,7 @@ function create_comment(id)
     {
         console.log("arg is: "+arg);
         $("#commentList").html('');
-        db.collection("posts").where("category", "==","other")
+        db.collection("posts").where("category", "==",arg)
         .get()
         .then(function(querySnapshot) {
             //$("#theposts").html('');
@@ -327,24 +321,39 @@ function create_comment(id)
                         console.log(data.votes);
                         console.log(id);                
                         $("#mainscreen").append(`
-                        <li>
-        
-                        <div id="post_div" data-postid=${id} class="showpost">
-                        
-                            <div id="titlediv">
-                            <small>created:   ${data.date}</small>
-                                <h3 >${data.title}</h3></div>
-                                <p id = "upvotes">votes: ${data.votes}</p>
-                            
-                            <br>
-                            <a class="showpost" data-postid=${id}>${data.name}</a>
-                            </li> 
-        
-                        </div>      <br/>`);
+                    
+                        <div id="post_div">
+                        <div id="titlediv">
+                        <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
+                    <small>created:   ${data.date}</small>
+                    <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                      
+    
+                       <p id="upvotes"><small>views: ${data.views}</small></p> 
+                        <div id="votediv">
+                            <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                            <h1 id="scoreCounter">${data.votes}</h1>
+                            <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                        </div>
+                        <br/>
+                        <div id="descdiv">
+                            <p id="description"align ="center">${data.name}</p>     
+                        </div>
+                        </div>
+    
+                        </div></div>
+                          <br/>`);
                     });
-        
                     $(".showpost").off("click",clickHandler);
-                    $(".showpost").on("click",clickHandler);    
+                    $(".showpost").on("click",clickHandler);  
+                    $(".downvote").off("click",downvoteHandler);
+                    $(".downvote").on("click",downvoteHandler);
+                    $(".upvote").off("click",upvoteHandler);
+                    $(".upvote").on("click",upvoteHandler);
+                    $(".username").off("click",showUserPosts);
+                    $(".username").on("click",showUserPosts);
+                    $(".showpost").off("click",clickHandler);
+                    $(".showpost").on("click",clickHandler);  
                 })
                 .catch(function(error) {
                     console.log("Error getting documents: ", error);
@@ -443,16 +452,16 @@ function displayuserPosts(username)
         });
         
 
-        db.collection(postid).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        // db.collection(postid).get().then(function(querySnapshot) {
+        //     querySnapshot.forEach(function(doc) {
             
-        db.collection(postid).doc(doc.id).delete().then(function() {
-            console.log("comment successfully deleted!");
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
-            })
-        })
+        // db.collection(postid).doc(doc.id).delete().then(function() {
+        //     console.log("comment successfully deleted!");
+        // }).catch(function(error) {
+        //     console.error("Error removing document: ", error);
+        // });
+        //     })
+        // })
         document.location.reload(true);
     }
 
