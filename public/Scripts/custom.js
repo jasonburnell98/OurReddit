@@ -83,7 +83,7 @@ function create_comment(id)
                        
                 
             db.collection("posts").add({
-                username: data.username,
+                username: user.email,
                 author:user.uid,
                 title: title,
                 name: content,
@@ -214,7 +214,7 @@ function displayuserPosts(username)
                     console.log(data.votes);
                     console.log(id);                
                     $("#mainscreen").append(`
-                    <li>
+                   <div>
     
                     <div id="post_div" data-postid=${id} class="showpost">
                     
@@ -226,7 +226,7 @@ function displayuserPosts(username)
                         
                         <br>
                         <a class="showpost" data-postid=${id}>${data.name}</a>
-                        </li> 
+                        </div>
     
                     </div>      <br/>`);
                 });
@@ -476,9 +476,9 @@ function displayuserPosts(username)
                     <p color="white">
                     <small>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
-                    <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
-                    <h1 id="scoreCounter">#ofcommentvoteshere</h1>
-                    <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
+                    <button  class="upvote btn-dark" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <h1 id="scoreCounter">${data.votes}</h1>
+                    <button  class="downvote btn-dark" id="downvoteButton" data-postid=${id}>&darr;</button>
                 </div>
                     </div> <br>
                     <div id="descdiv">
@@ -508,7 +508,7 @@ function displayuserPosts(username)
                     console.log(data.votes);
                     console.log(id);                
                     $("#theposts").append(`
-                    <li>
+                  <div>
     
                     <div id="post_div" data-postid=${id} class="showpost">
                     
@@ -519,8 +519,7 @@ function displayuserPosts(username)
                         
                         <br>
                         <a class="showpost" data-postid=${id}>${data.name}</a>
-                        </li> 
-    
+                    </div>
                     </div>      <br/>`);
                 });
     
@@ -759,7 +758,3 @@ function displayuserPosts(username)
      }
     
    
-  
-
-
-

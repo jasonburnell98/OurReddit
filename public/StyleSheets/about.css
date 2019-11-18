@@ -1,0 +1,48 @@
+@import url(https://fonts.googleapis.com/css?family=Croissant+One);
+
+body{
+	background-color: #000000;
+  padding: 0px;
+  margin: 0px;
+  color: black;
+ }
+
+#gradient
+{
+  width: 100%;
+  min-height: 100vh;
+  padding: 0px;
+  margin: 0px;
+  box-shadow: inset 0 0 200px hsla(0,0%,0%,.4);
+
+}
+
+
+h1 {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  font-family: 'Croissant One', sans-serif;
+  text-align: center;
+  font-weight: 400;
+  font-size: 2.5em;
+  line-height: 1.25em;
+  color: #2d2d2d;
+}
+h1 span {
+  display: inline-block;
+  border-top: 1px solid #2d2d2d;
+  border-bottom: 1px solid #2d2d2d;
+  padding: .5em .6em;
+}
+
+
+#ourredd{
+    
+    color: rgb(245, 241, 241);
+    font-weight: bolder;
+    font-family:"VAG Rounded W02 Thin";
+    src:url("http://rimowaedition.com/VAGRoundedStd-Thin.otf") format("opentype"); 
+  
+  }

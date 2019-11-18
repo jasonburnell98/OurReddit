@@ -32,24 +32,6 @@
         </head> 
 
     <body>
-    
-<!--- GOOGLE STUFF////
-               <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
-                  <div class="btn white darken-4 col s10 m4">
-                   <a href="/users/google-oauth/" style="text-transform:none">
-                  <div class="left">
-                    <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
-                </div>Login with Google</a>
-
-                  <button onclick = "googleSignin()">Google Signin</button>
-                    <div class="btn white darken-4 col s10 m4">
-                      <a href="/users/google-oauth/" style="text-transform:none">
-                          <div class="left">
-                              <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
-                          </div>Login with Google</a>
-                  </div> -->
-            
-
     <!--BOOTSTRAP NAVBAR-->
     <nav id="topbar"class="navbar navbar-expand-lg navbar-inverse"  >
       <a href="index.html"><img src="reddi.png" title="Example Image Link" width="30" height="30" /></a>
@@ -88,9 +70,6 @@
     </form>
         </div>
         
-
-  
-
              <!--ACCOUNT DROP DOWN-->
      <ul class="navbar-nav">
           <li class="nav-item dropdown">
@@ -100,6 +79,7 @@
                      <a class="dropdown-item">NightMode on/off
                     <div class="toggle"></div></a>
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="about.html">About</a>
                     <div class="dropdown-divider"></div>
                    &nbsp; &nbsp; &nbsp;
                  <a href="#" class="grey-text" id="logout">Logout</a>
@@ -134,7 +114,7 @@
         </div>
        <div class="right">
           <span class="loginwith">Sign in with<br />social network</span>
-          <button class="social-signin facebook">Log in with facebook</button>
+          <button class="social-signin facebook" onclick = "facebookSignin()">Log in with facebook</button>
           <button class="social-signin twitter" onclick ="githubSignin()">Log in with Github</button>
           <button class="social-signin google" onclick = "googleSignin()">Log in with Google+</button>
        </div>
@@ -155,9 +135,9 @@
       </div>
          <div class="right">
            <span class="loginwith">Sign in with<br />social network</span>
-              <button class="social-signin facebook">Log in with facebook</button>
-              <button class="social-signin twitter">Log in with Github</button>
-              <button class="social-signin google" onclick = "googleSignin()">Log in with Google+</button>
+          <button class="social-signin facebook" onclick = "facebookSignin()">Log in with facebook</button>
+          <button class="social-signin twitter" onclick ="githubSignin()">Log in with Github</button>
+          <button class="social-signin google" onclick = "googleSignin()">Log in with Google+</button>
            </div>
         <div class="or">OR</div>
       </div>
@@ -192,7 +172,13 @@
                     <input type="radio" name="options" id="option3" autocomplete="off">News
                   </label>
                 </div>
-             
+                <!--
+                <h1>Upload picture</h2>
+                <label class="upload-group">
+                Upload File
+                <input type="file" class="upload-group"id="file">
+                </label>
+                <button type="button"class = "btn btn-primary" id="uploadButton" onclick="uploadFile()">SUBMIT</button> -->
                 <br>
                <div class="form-group">
                 <textarea class="form-control" id = "name" rows="1"placeholder="Title"></textarea>
@@ -290,5 +276,7 @@ function filterFunction() {
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
                 <script src="Scripts/auth.js"></script>
                 <script src="Scripts/index.js"></script>
+
+                
     </body>
 </html>

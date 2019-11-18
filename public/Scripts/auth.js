@@ -96,17 +96,20 @@ loginForm.addEventListener('submit', (e) => {
 });
 
 //AUTHENTICATE WITH GOOGLE
-var provider = new firebase.auth.GoogleAuthProvider();
+var providerg = new firebase.auth.GoogleAuthProvider();
 
 function googleSignin() {
    firebase.auth()
    
-   .signInWithPopup(provider).then(function(result) {
+   .signInWithPopup(providerg).then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
 		
       console.log(token)
       console.log(user)
+      
+      document.location.reload(true);
+
    }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -117,22 +120,45 @@ function googleSignin() {
 }
 
 
-// var provider = new firebase.auth.GithubAuthProvider();
+var providergh = new firebase.auth.GithubAuthProvider();
 
-// function githubSignin() {
-//    firebase.auth().signInWithPopup(provider)
+function githubSignin() {
+   firebase.auth().signInWithPopup(providergh)
    
-//    .then(function(result) {
-//       var token = result.credential.accessToken;
-//       var user = result.user;
+   .then(function(result) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+	
+      console.log(token)
+      console.log(user)
+      document.location.reload(true);
+   }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
 		
-//       console.log(token)
-//       console.log(user)
-//    }).catch(function(error) {
-//       var errorCode = error.code;
-//       var errorMessage = error.message;
-		
-//       console.log(error.code)
-//       console.log(error.message)
-//    });
-// }
+      console.log(error.code)
+      console.log(error.message)
+   });
+}
+
+var providerfb = new firebase.auth.FacebookAuthProvider();
+
+function facebookSignin() {
+  firebase.auth().signInWithPopup(providerfb).then(function(result) {
+    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+    document.location.reload(true);
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+}
