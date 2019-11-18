@@ -55,7 +55,7 @@ body { font-family: 'Montserrat',sans-serif }
 #post_div {
   margin: auto;
   color: white;
-  width: 50%;
+  width: 70%;
   height: 100%;
   box-shadow: 0px 0px 25px #27262575;
   border-radius: 10px;
@@ -69,11 +69,10 @@ body { font-family: 'Montserrat',sans-serif }
 	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
 }
-#post_div:hover{
-  opacity:.8;
-}
+
 #titlediv:hover{
-  opacity:.20;
+  opacity:.8;
+  cursor: pointer;
 }
 .showpost:hover {
  opacity: .8;
@@ -100,7 +99,7 @@ small{
 .showpost {
   margin: auto;
   color: white;
-  width: 75%;
+  width: 80%;
   height: 100%;
   box-shadow: 0px 0px 25px #27262575;
   border-radius: 3px;
@@ -110,10 +109,16 @@ small{
   animation: animatedgradient 3s ease alternate infinite;
 
 }
+a{
+  cursor: pointer;
+}
 
 #titlediv {
-  
+  background-color: #fffffff5;
   text-align: center;
+  border-radius: 10px;
+  color:black;
+
 }
 
   .theposts {

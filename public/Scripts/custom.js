@@ -518,9 +518,9 @@ function displayuserPosts(username)
     
                        <p id="upvotes"><small>views: ${data.views}</small></p> 
                         <div id="votediv">
-                            <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                            <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
                             <h1 id="scoreCounter">${data.votes}</h1>
-                            <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                            <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
                         <br/>
                         <div id="descdiv">
@@ -548,18 +548,20 @@ function displayuserPosts(username)
                     $("#theposts").append(`
                     <div id="post_div">
                     <div id="titlediv">
-                    <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
-                        <small>created:   ${data.date}
-                        <a data-username=${data.username} class = "username">by: ${data.username}</a></small>
-                           <div class ="deletediv"> 
+                    <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a>
+                    <div class ="deletediv"> 
                                 <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
                            </div>
+                           </div>
+                        <small>created:   ${data.date}
+                        <a data-username=${data.username} class = "username">by: ${data.username}</a></small>
+                           
     
                            <p id="upvotes"><small>views: ${data.views}</small></p> 
                             <div id="voterdiv">
-                                <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
-                                <h1 id="scoreCounter">${data.votes}</h1>
-                                <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                            <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                            <h1 id="scoreCounter">${data.votes}</h1>
+                            <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
                             </div>
                             <br/>
                             <div id="descdiv">
@@ -650,13 +652,14 @@ function displayuserPosts(username)
                 <div class="gradient-border" id="box">
                 <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
                     <div id="commentdate" >
-                    <p color="white">
-                    <small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
-                    date created: ${data.date}</p> </small>  <div id="voterdiv">
-                    <button  class="upvote btn btn" id="upvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&uarr;</button>
-                    <h1 id="scoreCounter">${data.votes}</h1>
-                    <button  class="downvote btn" id="downvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&darr;</button>
-                </div>
+                        <a color="white"><small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
+                        date created: ${data.date}</a> </small>  
+                        <p> ${data.username}</p>
+                        <div id="voterdiv">
+                            <button  class="upvote btn btn" id="upvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&uarr;</button>
+                            <h1 id="scoreCounter">${data.votes}</h1>
+                            <button  class="downvote btn" id="downvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&darr;</button>
+                        </div>
                     </div> <br>
                     <div id="descdiv">
                     <p >${data.comment}</p> </div>
@@ -781,9 +784,9 @@ function displayuserPosts(username)
 
                    <p id="upvotes"><small>views: ${data.views}</small></p> 
                     <div id="votediv">
-                        <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
-                        <h1 id="scoreCounter">${data.votes}</h1>
-                        <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                    <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <h1 id="scoreCounter">${data.votes}</h1>
+                    <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
                     </div>
                     <br/>
                     <div id="descdiv">
@@ -824,9 +827,9 @@ function displayuserPosts(username)
 
                        <p id="upvotes"><small>views: ${data.views}</small></p> 
                         <div id="voterdiv">
-                            <button  class="upvote btn-primary" id="upvoteButton" data-postid=${id}>&uarr;</button>
-                            <h1 id="scoreCounter">${data.votes}</h1>
-                            <button  class="downvote btn-primary" id="downvoteButton" data-postid=${id}>&darr;</button>
+                        <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                        <h1 id="scoreCounter">${data.votes}</h1>
+                        <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
                         </div>
                         <br/>
                         <div id="descdiv">
