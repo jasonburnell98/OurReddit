@@ -65,9 +65,7 @@ function create_comment(id)
             var category;
             var e = document.getElementById("sel1");
             var category = e.options[e.selectedIndex].value;
-            alert(category);
-    
-        
+                    
             var title = $("#name").val();
             var content = $("#contents").val();
             var today = new Date();
