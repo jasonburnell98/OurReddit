@@ -644,7 +644,7 @@ function displayuserPosts(username)
                     <p color="white">
                     <small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
-                    <button  class="upvote btn" id="upvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&uarr;</button>
+                    <button  class="upvote btn btn" id="upvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&uarr;</button>
                     <h1 id="scoreCounter">${data.votes}</h1>
                     <button  class="downvote btn" id="downvoteCommentButton" data-commentid=${id} data-postid=${collectionId}>&darr;</button>
                 </div>
