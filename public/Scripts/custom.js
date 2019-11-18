@@ -392,7 +392,6 @@ function displayuserPosts(username)
                     
                         <div id="titlediv">
                         <small>created:   ${data.date}</small>
-                           <div class ="deletediv"> <button class ="delete btn-danger" data-postid=${id}>delete </button></div>
                             <h3 >${data.title}</h3></div>
                             <p id = "upvotes">votes: ${data.votes}</p>
                         
