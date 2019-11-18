@@ -5,7 +5,7 @@
   //call back function, takes in user as a parameter
 auth.onAuthStateChanged(user => {
   if (user) {
-    console.log('user logged in: ', user.email);   
+    console.log('user logged in: ');
     
   } else {
     console.log('user logged out');
@@ -22,9 +22,7 @@ signupForm.addEventListener('submit', (e) => {
   const email = signupForm['signup-email'].value;
   const password = signupForm['signup-password'].value;
   const username= signupForm['signup-username'].value;
-  console.log(password);
-  alert(username);
-  console.log(email);  
+ 
 
 
   // sign up the user
@@ -104,18 +102,13 @@ function googleSignin() {
    .signInWithPopup(providerg).then(function(result) {
       var token = result.credential.accessToken;
       var user = result.user;
-		
-      console.log(token)
-      console.log(user)
-      
+	
       document.location.reload(true);
 
    }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-		
-      console.log(error.code)
-      console.log(error.message)
+
    });
 }
 

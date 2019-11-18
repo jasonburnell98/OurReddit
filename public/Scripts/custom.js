@@ -65,7 +65,7 @@ function create_comment(id)
             var category;
             var e = document.getElementById("sel1");
             var category = e.options[e.selectedIndex].value;
-                    
+
             var title = $("#name").val();
             var content = $("#contents").val();
             var today = new Date();
@@ -91,7 +91,7 @@ function create_comment(id)
                    const users = db.collection('users').doc(user.uid);
                   
                     users.get().then(doc => {
-                        console.log(doc.data());
+                       
                         var data = doc.data();
                        
                 
@@ -106,11 +106,9 @@ function create_comment(id)
                 views:0                 
             }) 
             
-            .then(function(doc) {
-                console.log("Document written with ID: ", doc.data);
+            .then(function(doc) { 
                 document.location.reload(true);
-                console.log("uid is: "+uid);
-            })
+               })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
             })
