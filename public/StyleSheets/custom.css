@@ -72,6 +72,9 @@ body { font-family: 'Montserrat',sans-serif }
 #post_div:hover{
   opacity:.8;
 }
+#titlediv:hover{
+  opacity:.20;
+}
 .showpost:hover {
  opacity: .8;
  margin-top: 30px; /* Add a top margin to avoid content overlay */
