@@ -29,7 +29,7 @@ function create_comment(id)
                 var data = doc.data();
 
             db.collection(id).add({
-                username:user.email,
+                username:data.username,
                 author: user.uid,
                 linkedto:id,
                 comment:content,
@@ -104,7 +104,8 @@ function create_comment(id)
                        
                 
             db.collection("posts").add({
-                username: user.email,
+                
+                username: data.username,
                 author:user.uid,
                 title: title,
                 name: content,
@@ -211,6 +212,19 @@ function create_comment(id)
     {
         displayCategory("media");
     }
+    function downvoteCommentHandler(evt)
+    {
+        var id = $(evt.currentTarget).attr("data-commentid");
+        var post = $(evt.currentTarget).attr("data-postid");
+        downvoteComment(id,post);
+    }
+
+    function upvoteCommentHandler(evt)
+    {
+        var id = $(evt.currentTarget).attr("data-commentid");
+        var post = $(evt.currentTarget).attr("data-postid");
+        upvoteomment(id,post)
+    }
 
     function deleteCommentHandler(evt)
     {
@@ -265,7 +279,39 @@ function create_comment(id)
         })
     }
 
+    function downvoteComment(id,post)
+    {
+        const ref = db.collection(post).doc(id);
+        var temp;   
+             //THIS IS HOW YOU ACCESS EACH POST               
+        ref.get().then(doc => {
+            
+            var data = doc.data();
+            temp= data.votes;
+            temp--;
+        
+            db.collection(post).doc(id).update({
+                votes:temp
+            })
+        })
+    }
 
+    function upvoteComment(id,post)
+    {
+        const ref = db.collection(post).doc(id);
+        var temp;   
+             //THIS IS HOW YOU ACCESS EACH POST               
+        ref.get().then(doc => {
+            
+            var data = doc.data();
+            temp= data.votes;
+            temp++;
+        
+            db.collection(post).doc(id).update({
+                votes:temp
+            })
+        })
+    }
     function displayCategory(arg)
     {
         console.log("arg is: "+arg);
@@ -340,7 +386,7 @@ function displayuserPosts(username)
                     console.log(data.votes);
                     console.log(id);                
                     $("#mainscreen").append(`
-                   <div>
+                    <li>
     
                     <div id="post_div" data-postid=${id} class="showpost">
                     
@@ -352,7 +398,7 @@ function displayuserPosts(username)
                         
                         <br>
                         <a class="showpost" data-postid=${id}>${data.name}</a>
-                        </div>
+                        </li> 
     
                     </div>      <br/>`);
                 });
@@ -380,14 +426,11 @@ function displayuserPosts(username)
             
             var data = doc.data();
             temp= data.votes;
-            if(temp>0)
-            {      
                 temp--;
             
                 db.collection('posts').doc(id).update({
                     votes:temp
                 })
-        }
 
         })
     }
@@ -602,9 +645,9 @@ function displayuserPosts(username)
                     <p color="white">
                     <small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
-                    <button  class="upvote btn-dark" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <button  class="upvote btn" id="upvoteButton" data-commentid=${id}data-postid=${collectionId}>&uarr;</button>
                     <h1 id="scoreCounter">${data.votes}</h1>
-                    <button  class="downvote btn-dark" id="downvoteButton" data-postid=${id}>&darr;</button>
+                    <button  class="downvote btn" id="downvoteButton" data-commentid=${id} data-postid=${collectionId}>&darr;</button>
                 </div>
                     </div> <br>
                     <div id="descdiv">
@@ -620,7 +663,12 @@ function displayuserPosts(username)
             $(".showcomment").on("click",commentclickHandler);
             $(".commentclose").off("click",deleteCommentHandler);
             $(".commentclose").on("click",deleteCommentHandler);
+            $("#upvoteButton").off("click",upvoteCommentHandler);
+            $("#upvoteButton").on("click",upvoteCommentHandler);
+            $("#downvoteButton").off("click",downvoteCommentHandler);
+            $("#downvoteButton").on("click",downvoteCommentHandler);
 
+        
         });
         
     }
@@ -637,7 +685,7 @@ function displayuserPosts(username)
                     console.log(data.votes);
                     console.log(id);                
                     $("#theposts").append(`
-                  <div>
+                    <li>
     
                     <div id="post_div" data-postid=${id} class="showpost">
                     
@@ -648,7 +696,8 @@ function displayuserPosts(username)
                         
                         <br>
                         <a class="showpost" data-postid=${id}>${data.name}</a>
-                    </div>
+                        </li> 
+    
                     </div>      <br/>`);
                 });
     
@@ -793,7 +842,7 @@ function displayuserPosts(username)
          
           $(".create_comment").off("click",createCommentClickHandler);
           $(".create_comment").on("click",createCommentClickHandler);
-          $(".downvote").off("click",downvoteHandler);
+          $(".downvote").off("click",downvoteHandler); 
           $(".downvote").on("click",downvoteHandler);
           $(".upvote").off("click",upvoteHandler);
           $(".upvote").on("click",upvoteHandler);
@@ -802,7 +851,6 @@ function displayuserPosts(username)
           $("#deletepost").off("click",deleteHandler);
           $("#deletepost").on("click",deleteHandler);
            }
-
    });
    
 })
@@ -866,14 +914,11 @@ function displayuserPosts(username)
             data = doc.data();
             var id = doc.id;
         console.log(postid);
-        //$("#theposts").html('');
+
         $("#mainscreen").html('');
         $("#mainscreen").html(`
         
-        <div id=${id}>
-                
                 <div id="commentDiv">
-                
                 <div class="gradient-border" id="box">
                 <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
                     <div id="commentdate" >
@@ -888,16 +933,24 @@ function displayuserPosts(username)
                     <p >${data.comment}</p> </div>
                     </div>
                     </div>  
-                    </div>
-<br/>`);
+                  
+                    <div id = "commentbtn">
+                    <input type="text" id = "commentInput" placeholder="enter comment"></input>
+                <button class="create_comment btn-primary" data-commentid=${id}> create comment</button>
+            </div>    
+    <br/>`);
         
          $(".create_comment").off("click",createCommentClickHandler);
          $(".create_comment").on("click",createCommentClickHandler);
         
         })
-        getComments(commentid);
+        //getComments(commentid);
 
 
      }
     
    
+  
+
+
+
