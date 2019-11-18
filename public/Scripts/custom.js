@@ -10,10 +10,10 @@ const auth = firebase.auth();
 function create_comment(id)
 {
     firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
+        if (user){
               // User logged in already or has just logged in.
             console.log("uid " +user.uid);
-
+            
             var content= $("#commentInput").val();
             console.log(id);
             console.log("creating comment");
@@ -21,8 +21,15 @@ function create_comment(id)
             var currdate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             var time = today.getHours()%12 + ":" + today.getMinutes() + ":" + today.getSeconds();
             currdate= currdate +", "+time;
+            
+            const users = db.collection('users').doc(user.uid);
+                  
+            users.get().then(doc => {
+                console.log(doc.data());
+                var data = doc.data();
 
             db.collection(id).add({
+                username:data.username,
                 author: user.uid,
                 linkedto:id,
                 comment:content,
@@ -41,11 +48,13 @@ function create_comment(id)
                 console.error("Error adding document: ", error);
             });
 
+            })
         }
 
         else{
             alert("please log in to create a comment");
         }
+   
     })
 }
 
@@ -53,6 +62,18 @@ function create_comment(id)
   function add()
         {
 
+            var category;
+
+            // if(document.getElementById('other').checked)
+            //     category="other";
+            // else if(document.getElementById('sports').checked)
+            //     category="sports";
+            // else if(document.getElementById('news').checked)
+            //     category="news";
+            // else if(document.getElementById('media').checked)
+            //     category="media";
+
+        
             var title = $("#name").val();
             var content = $("#contents").val();
             var today = new Date();
@@ -83,14 +104,18 @@ function create_comment(id)
                        
                 
             db.collection("posts").add({
+<<<<<<< HEAD
                 username: user.email,
+=======
+                
+                username: data.username,
+>>>>>>> 9b803c48b2584e7d936a7fbfe76147dbf4199b99
                 author:user.uid,
                 title: title,
                 name: content,
                 date: currdate,
                 votes:0,
-                views:0
-                                
+                views:0                 
             }) 
             
             .then(function(doc) {
@@ -135,8 +160,9 @@ function create_comment(id)
 
     //handles when comments get clicked
     let commentclickHandler = function(evt){
-        let postid = $(evt.currentTarget).attr("data-commentid");
-        displaySinglecomment(postid);   
+        let commentid = $(evt.currentTarget).attr("data-commentid");
+        let postid = $(evt.currentTarget).attr("data-postid");
+        displaySinglecomment(commentid,postid);   
     }
 
     let createCommentClickHandler = function(evt){
@@ -173,13 +199,118 @@ function create_comment(id)
     function showUserPosts(evt)
     {
         var username = $(evt.currentTarget).attr("data-username");
-        displayuserPosts(username)
-       
+        displayuserPosts(username);
+    }
+
+    function getSports(evt)
+    {
+        displayCategory("sports");
+    }
+
+    function getNews(evt)
+    {
+        displayCategory("news");
+    }
+
+    function getMedia(evt)
+    {
+        displayCategory("media");
+    }
+
+    function deleteCommentHandler(evt)
+    {
+        var id = $(evt.currentTarget).attr("data-commentid");
+        var post = $(evt.currentTarget).attr("data-postid");
+        deleteComment(id,post);
     }
 
     $("#searchBar").off("click",searchHandler);
     $("#searchBar").on("click",searchHandler);
+    $("#sports").off("click",getSports);
+    $("#sports").on("click",getSports);
+    $("#media").off("click",getMedia);
+    $("#media").on("click",getMedia);
+    $("#news").off("click",getNews);
+    $("#news").on("click",getNews);
     
+    function deleteComment(id,post)
+    {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user){
+
+               const users = db.collection('users').doc(user.uid);
+              
+                users.get().then(doc => {
+
+                    var data = doc.data();
+                    uid= data.uid;     
+                    const comment = db.collection(post).doc(id);
+            
+             //THIS IS HOW YOU ACCESS EACH POST               
+                comment.get().then(doc => {
+                 //console.log(doc.data());
+                    data = doc.data();
+                    author = data.author;
+                    console.log('author is:'+author+", uid is+"+uid);
+
+                    if(author == uid)
+                    {
+                        db.collection(post).doc(id).delete().then(function() {
+                            console.log("Document successfully deleted!");
+                        }).catch(function(error) {
+                            console.error("Error removing document: ", error);
+                        });
+                    }
+                    else{
+                        alert("permission denied");
+                    }
+                })
+            })
+        }
+        })
+    }
+
+
+    function displayCategory(arg)
+    {
+        console.log("arg is: "+arg);
+        $("#commentList").html('');
+        db.collection("posts").where("category", "==","other")
+        .get()
+        .then(function(querySnapshot) {
+            //$("#theposts").html('');
+            $("#mainscreen").html('');
+            querySnapshot.forEach(function(doc) {
+                        var data = doc.data();
+                        var id = doc.id;
+                        console.log(data.votes);
+                        console.log(id);                
+                        $("#mainscreen").append(`
+                        <li>
+        
+                        <div id="post_div" data-postid=${id} class="showpost">
+                        
+                            <div id="titlediv">
+                            <small>created:   ${data.date}</small>
+                                <h3 >${data.title}</h3></div>
+                                <p id = "upvotes">votes: ${data.votes}</p>
+                            
+                            <br>
+                            <a class="showpost" data-postid=${id}>${data.name}</a>
+                            </li> 
+        
+                        </div>      <br/>`);
+                    });
+        
+                    $(".showpost").off("click",clickHandler);
+                    $(".showpost").on("click",clickHandler);    
+                })
+                .catch(function(error) {
+                    console.log("Error getting documents: ", error);
+                });
+  
+    
+    }
    
    
     function upvote(id)
@@ -298,8 +429,7 @@ function displayuserPosts(username)
                 var data = doc.data();
                 var id = doc.id;
                 var uid=data.author;
-                console.log(data.upvotes);
-                console.log(id);        
+                      
                
                 firebase.auth().onAuthStateChanged((user) => {
                     if(!user){
@@ -333,9 +463,9 @@ function displayuserPosts(username)
                    //then he can not delete the post
                    else if(user.uid !=uid){
                     $("#theposts").append(`
-                    <div id="post_div" data-postid=${id} class="showpost">
-                    <div id="titlediv">
-                    <h1 >${data.title}</h1></div>
+                    <div id="post_div">
+                        <div id="titlediv">
+                        <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
                     <small>created:   ${data.date}</small>
                     <a data-username=${data.username} class = "username">by: ${data.username}</a>
                       
@@ -370,13 +500,11 @@ function displayuserPosts(username)
                    else if(user.uid == uid)
                    {
                     $("#theposts").append(`
-                        <div id="post_div" data-postid=${id} class="showpost">
-                        
-                        <div id="titlediv">
-                        <h1 >${data.title}</h1></div>
-                        
-                        <small>created:   ${data.date}</small>
-                        <a data-username=${data.username} class = "username">by: ${data.username}</a>
+                    <div id="post_div">
+                    <div id="titlediv">
+                    <a data-postid=${id} class="showpost"><h1 >${data.title}</h1></a></div>
+                        <small>created:   ${data.date}
+                        <a data-username=${data.username} class = "username">by: ${data.username}</a></small>
                            <div class ="deletediv"> 
                                 <button id="deletepost" class ="delete btn-danger" data-postid=${id}>delete </button>
                            </div>
@@ -457,24 +585,27 @@ function displayuserPosts(username)
 
     function displayComments(collectionId)
     {
+        console.log("postId:"+collectionId);
         db.collection(collectionId).get().then(function(querySnapshot) {
             $("#commentList").html('');
             querySnapshot.forEach(function(doc) {
                 // doc.data() is never undefined for query doc snapshots
                 var data = doc.data();
                 var id = doc.id;
-                console.log(data.comment);
-                console.log(id);                
+                
+                console.log("comment: "+data.comment);
+                console.log("comment id: "+id);     
+                           
                 $("#commentList").append(`
                 <div id=${id}>
                 
-                <div id="commentDiv" class="showcomment" data-commentid=${id}>
+                <div id="commentDiv">
                 
                 <div class="gradient-border" id="box">
-                <span class="commentclose" title="commentclose">&times;</span>
-                    <div id="commentdate">
+                <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
+                    <div id="commentdate" >
                     <p color="white">
-                    <small>
+                    <small  class="showcomment" data-commentid=${id} data-postid=${collectionId}>
                     date created: ${data.date}</p> </small>  <div id="voterdiv">
                     <button  class="upvote btn-dark" id="upvoteButton" data-postid=${id}>&uarr;</button>
                     <h1 id="scoreCounter">${data.votes}</h1>
@@ -482,7 +613,7 @@ function displayuserPosts(username)
                 </div>
                     </div> <br>
                     <div id="descdiv">
-                    <p>${data.comment}</p> </div>
+                    <p >${data.comment}</p> </div>
                     </div>
                     </div>  
                     </div>
@@ -492,6 +623,9 @@ function displayuserPosts(username)
             });
             $(".showcomment").off("click",commentclickHandler);
             $(".showcomment").on("click",commentclickHandler);
+            $(".commentclose").off("click",deleteCommentHandler);
+            $(".commentclose").on("click",deleteCommentHandler);
+
         });
         
     }
@@ -531,7 +665,6 @@ function displayuserPosts(username)
             });
   
     }
-
     
     //display a single post
     function displaySinglePost(postid){
@@ -541,11 +674,11 @@ function displayuserPosts(username)
         var name;   
              //THIS IS HOW YOU ACCESS EACH POST               
         post.get().then(doc => {
-            
+
             var data = doc.data();
             var id = doc.id;
             var uid=data.author;
-            console.log(id);
+            console.log("post id:"+id);
             var viewcnt= data.views;
             viewcnt++;
             db.collection('posts').doc(postid).update({
@@ -582,6 +715,7 @@ function displayuserPosts(username)
                     $(".username").on("click",showUserPosts);
                }
 
+               
                //if there is a user logged in but not the same user that created the post 
                //then he can not delete the post
                else if(user.uid !=uid){
@@ -722,39 +856,53 @@ function displayuserPosts(username)
 
 }
 
-    function displaySinglecomment(postid){
-        // let x = firebase.database().ref(postid);
+    function displaySinglecomment(commentid,postid){
         
+        
+        let x = firebase.database().ref(postid);
+
         console.log(postid);
-        const post = db.collection(postid);
+        const post = db.collection(postid).doc(commentid);
         var name;   
+        
              //THIS IS HOW YOU ACCESS EACH POST               
         post.get().then(doc => {
 
             data = doc.data();
             var id = doc.id;
         console.log(postid);
-        $("#commentList").append(`
-         <div id="post_div">
-         <h1 align ="center">${postid}</h1> 
-         <ul id="users"> </ul>
-         </div>
-           <button id="comment" class= "create_comment" data-commentid=${id}> create comment</button>
-         </div>      <br/>`);
+        //$("#theposts").html('');
+        $("#mainscreen").html('');
+        $("#mainscreen").html(`
+        
+        <div id=${id}>
+                
+                <div id="commentDiv">
+                
+                <div class="gradient-border" id="box">
+                <span class="commentclose" title="commentclose" data-postid = ${data.linkedto} data-commentid=${id}>&times;</span>
+                    <div id="commentdate" >
+                    <p color="white">
+                    date created: ${data.date}</p> </small>  <div id="voterdiv">
+                    <button  class="upvote btn" id="upvoteButton" data-postid=${id}>&uarr;</button>
+                    <h1 id="scoreCounter">${data.votes}</h1>
+                    <button  class="downvote btn" id="downvoteButton" data-postid=${id}>&darr;</button>
+                </div>
+                    </div> <br>
+                    <div id="descdiv">
+                    <p >${data.comment}</p> </div>
+                    </div>
+                    </div>  
+                    </div>
+<br/>`);
         
          $(".create_comment").off("click",createCommentClickHandler);
          $(".create_comment").on("click",createCommentClickHandler);
         
         })
-        getComments(postid);
-         //create_comment(postid);
- 
-        //  db.collection(postid).get().then(function(querySnapshot) {
-        //      querySnapshot.forEach(function(doc) {
-        //          var data = doc.data();
-        //          var id = doc.id;
-        //          console.log(id);            
-        //      })})
+        getComments(commentid);
+
+
      }
     
    
